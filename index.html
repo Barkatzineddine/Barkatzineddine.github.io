@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohamed Zineddine Barkat</title>
+<meta name="description" content="Portfolio de Mohamed Zineddine Barkat : parcours, projets et compétences en cybersécurité, systèmes et réseaux.">
+<meta name="theme-color" content="#090d11">
+<meta property="og:title" content="Mohamed Zineddine Barkat — Cybersécurité">
+<meta property="og:description" content="Parcours, projets GitHub et compétences en cybersécurité, systèmes et réseaux.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23090d11'/%3E%3Cpath d='M16 4l10 4v8c0 6-4 10-10 12C10 26 6 22 6 16V8z' fill='none' stroke='%232ee6a8' stroke-width='2'/%3E%3Cpath d='M11 16l4 4 7-8' fill='none' stroke='%232ee6a8' stroke-width='2'/%3E%3C/svg%3E">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap">
+<style>
+  /* layout concept: one terminal session split into four colour-coded zones —
+     parcours (amber), projets (green), compétences (blue), contact (green) —
+     under a sticky nav; a Three.js network globe in the hero, tilt-on-hover project cards */
+  :root{
+    --bg:#090d11; --panel:#0f151b; --panel-2:#0c1117; --raised:#121920;
+    --line:#223038; --line-soft:#182127;
+    --ink:#cfe3df; --ink-dim:#7a928e; --ink-faint:#4d625e;
+    --accent:#2ee6a8; --accent-dim:#1c8f69;
+    --amber:#ffb454; --blue:#6cb2ff; --red:#ff5c5c;
+    --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{background:var(--bg);}
+  body{
+    color:var(--ink);font-family:var(--mono);font-size:14px;line-height:1.6;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+      repeating-linear-gradient(0deg, color-mix(in srgb, var(--accent) 5%, transparent) 0 1px, transparent 1px 34px),
+      repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 5%, transparent) 0 1px, transparent 1px 34px),
+      var(--bg);
+    position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:70;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.14) 0 1px, transparent 1px 3px);
+    mix-blend-mode:multiply;opacity:.3;
+  }
+  body::after{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60;}
+  h1,h2,h3,h4{font-family:var(--mono);margin:0;}
+  a{color:var(--accent);}
+  .gutter{padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));}
+  .page{max-width:1160px;margin:0 auto;padding-block:16px 48px;position:relative;z-index:1;}
+
+  .led{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px 1px var(--accent);flex:none;}
+  @media (prefers-reduced-motion:no-preference){ .led.live{animation:pulse 1.8s ease-in-out infinite;} }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+  /* ---- nav ---- */
+  .nav{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    border:1px solid var(--line);background:color-mix(in srgb, var(--bg) 90%, transparent);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:8px 14px;font-size:12px;
+  }
+  .nav .brand{color:var(--ink-dim);white-space:nowrap;}
+  .nav .brand b{color:var(--accent);font-weight:600;}
+  .nav .links{display:flex;gap:4px;overflow-x:auto;min-width:0;}
+  .nav .links a{color:var(--ink-dim);text-decoration:none;padding:5px 10px;border:1px solid transparent;white-space:nowrap;}
+  .nav .links a:hover{color:var(--ink);}
+  .nav .links a.on{color:var(--sec-c, var(--accent));border-color:var(--line);background:var(--panel);}
+  .nav .links a:focus-visible,.btn-primary:focus-visible,.btn-ghost:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .nav .status{display:flex;align-items:center;gap:7px;color:var(--accent);white-space:nowrap;}
+  @media (max-width:760px){.nav .brand,.nav .status{display:none;}}
+
+  /* ---- hero ---- */
+  .hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:center;padding-block:34px 8px;}
+  @media (max-width:880px){.hero{grid-template-columns:1fr;}}
+  .prompt{color:var(--ink-dim);font-size:12.5px;margin-bottom:8px;}
+  .prompt .op{color:var(--accent);}
+  .typed{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom;border-right:2px solid var(--accent);width:9ch;}
+  @media (prefers-reduced-motion:no-preference){ .typed{animation:typing 1.4s steps(9,end) 1 both, blink .85s step-end infinite;} }
+  @keyframes typing{from{width:0}to{width:9ch}}
+  @keyframes blink{50%{border-color:transparent}}
+  h1.name{font-size:clamp(30px,5.6vw,52px);font-weight:800;letter-spacing:-.015em;line-height:1.05;text-wrap:balance;}
+  h1.name .hi{color:var(--accent);}
+  .role-line{margin-top:12px;font-size:13.5px;color:var(--amber);}
+  .brief{max-width:60ch;margin:14px 0 0;color:var(--ink-dim);font-size:13px;}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+  .btn-primary,.btn-ghost{font-family:var(--mono);font-size:12.5px;padding:9px 15px;text-decoration:none;border:1px solid var(--accent);}
+  .btn-primary{background:var(--accent);color:#04100b;font-weight:700;}
+  .btn-primary:hover{background:#5bf0be;}
+  .btn-ghost{color:var(--ink);border-color:var(--line);background:var(--panel);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .status-chip{margin-top:18px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel-2);padding:7px 12px;font-size:11.5px;}
+  .status-chip b{color:var(--accent);font-weight:600;}
+
+  .hero-3d{position:relative;aspect-ratio:1/1;width:100%;max-width:100%;max-height:480px;border:1px solid var(--line);background:radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 9%, var(--panel)) 0%, var(--panel-2) 70%);overflow:hidden;}
+  @media (max-width:880px){.hero-3d{aspect-ratio:4/3;max-height:340px;}}
+  .hero-3d.no-gl{display:none;}
+  .hero-3d canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .hero-3d::before,.hero-3d::after{content:"";position:absolute;width:18px;height:18px;border:2px solid var(--accent);pointer-events:none;z-index:2;}
+  .hero-3d::before{top:8px;left:8px;border-right:none;border-bottom:none;}
+  .hero-3d::after{bottom:8px;right:8px;border-left:none;border-top:none;}
+  .hud{position:absolute;z-index:2;font-size:10.5px;color:var(--ink-dim);letter-spacing:.04em;pointer-events:none;}
+  .hud.tl{top:12px;left:34px;} .hud.bl{bottom:12px;left:14px;} .hud.br{bottom:12px;right:34px;text-align:right;}
+  .hud b{color:var(--accent);font-weight:600;} .hud .amb{color:var(--amber);} .hud .rd{color:var(--red);}
+
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px;}
+  @media (max-width:640px){.stats{grid-template-columns:1fr;}}
+  .stat{border:1px solid var(--line);background:var(--panel);padding:12px 16px;display:flex;align-items:baseline;gap:12px;min-width:0;}
+  .stat .big{font-size:24px;font-weight:800;color:var(--accent);flex:none;}
+  .stat .txt{font-size:11.5px;color:var(--ink-dim);}
+
+  /* ---- zones ---- */
+  .zone{margin-top:64px;scroll-margin-top:76px;}
+  #parcours{--sec:var(--amber);--sec-c:var(--amber);}
+  #projets{--sec:var(--accent);--sec-c:var(--accent);}
+  #competences{--sec:var(--blue);--sec-c:var(--blue);}
+  #contact{--sec:var(--accent);--sec-c:var(--accent);}
+  .zone-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:22px;position:relative;}
+  .zone-head::after{content:"";position:absolute;left:0;bottom:-1px;width:110px;height:2px;background:var(--sec);}
+  .zone-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .zone-title .n{color:var(--sec);font-size:12px;}
+  .zone-title h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.01em;}
+  .zone-sub{color:var(--ink-dim);font-size:12.5px;max-width:48ch;margin:0;}
+
+  /* terminal card */
+  .term{border:1px solid var(--line);background:var(--panel);min-width:0;}
+  .term-bar{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--panel-2);border-bottom:1px solid var(--line);font-size:11px;color:var(--ink-dim);min-width:0;}
+  .dots{display:flex;gap:5px;margin-right:4px;flex:none;}
+  .dots span{width:7px;height:7px;border-radius:50%;}
+  .dots span:nth-child(1){background:#ff5f56;} .dots span:nth-child(2){background:#ffbd2e;} .dots span:nth-child(3){background:#27c93f;}
+  .term-body{padding:16px 18px;min-width:0;}
+  .term-body > h3{font-size:12px;color:var(--sec);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;font-weight:700;}
+
+  .tagset{display:flex;flex-wrap:wrap;gap:6px;}
+  .tag{font-size:10.5px;color:var(--ink);border:1px solid var(--line-soft);background:var(--panel-2);padding:3px 7px;}
+  .tag::before{content:"[";color:var(--accent-dim);} .tag::after{content:"]";color:var(--accent-dim);}
+
+  /* ---- parcours ---- */
+  .par-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:20px;align-items:start;}
+  @media (max-width:900px){.par-grid{grid-template-columns:1fr;}}
+  .par-side{display:flex;flex-direction:column;gap:20px;min-width:0;}
+  .log{border-left:2px solid var(--line);padding:0 0 18px 20px;position:relative;margin-left:3px;}
+  .log::before{content:"";position:absolute;left:-6px;top:3px;width:10px;height:10px;background:var(--bg);border:2px solid var(--amber);border-radius:50%;}
+  .log:last-child{padding-bottom:2px;}
+  .log-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-bottom:4px;}
+  .badge{font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;border:1px solid currentColor;}
+  .badge.alt{color:var(--amber);} .badge.stage{color:var(--blue);} .badge.free{color:var(--ink-dim);}
+  .log-date{font-size:10.5px;color:var(--ink-dim);}
+  .log h3{font-size:14.5px;font-weight:700;color:var(--ink);}
+  .log-org{color:var(--amber);font-size:12px;margin-bottom:6px;}
+  .log ul{margin:0;padding-left:16px;}
+  .log li{margin-bottom:4px;font-size:12.8px;}
+  .log li::marker{color:var(--amber);content:"▸ ";}
+  .edu-row{padding:10px 0;border-bottom:1px dashed var(--line);}
+  .edu-row:first-of-type{padding-top:0;} .edu-row:last-child{border-bottom:none;padding-bottom:0;}
+  .edu-row .yr{font-size:10.5px;color:var(--amber);display:block;margin-bottom:2px;}
+  .edu-row .deg{font-weight:700;font-size:13px;color:var(--ink);}
+  .edu-row .where{color:var(--ink-dim);font-size:11.5px;margin-top:2px;}
+  .lang-row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:12.5px;}
+  .lang-row:last-child{border-bottom:none;padding-bottom:0;} .lang-row:first-of-type{padding-top:0;}
+  .lang-row span:last-child{color:var(--ink-dim);text-align:right;}
+
+  /* ---- projets ---- */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-family:var(--mono);font-size:11.5px;padding:6px 12px;border:1px solid var(--line);background:var(--panel);color:var(--ink-dim);cursor:pointer;}
+  .chip:hover{color:var(--ink);border-color:var(--accent-dim);}
+  .chip[aria-pressed="true"]{color:#04100b;background:var(--accent);border-color:var(--accent);font-weight:700;}
+  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;perspective:1300px;}
+  @media (max-width:760px){.pgrid{grid-template-columns:1fr;}}
+  .pcard{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);background:var(--panel);min-width:0;
+    transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transform-style:preserve-3d;transition:transform .18s ease-out, border-color .2s ease;will-change:transform;}
+  .pcard:hover{border-color:var(--accent);}
+  .pcard::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .2s;
+    background:radial-gradient(circle at var(--gx,50%) var(--gy,0%), color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%);}
+  .pcard:hover::after{opacity:1;}
+  .thumb{display:block;position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border:none;border-bottom:1px solid var(--line);background:#000;padding:0;cursor:pointer;}
+  .thumb img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block;transition:transform .35s ease;}
+  .pcard:hover .thumb img{transform:scale(1.04);}
+  .thumb:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+  .kind{position:absolute;top:10px;left:10px;font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;background:var(--bg);border:1px solid currentColor;}
+  .kind.sec{color:var(--red);} .kind.web{color:var(--accent);} .kind.soft{color:var(--blue);}
+  .morebar{display:flex;justify-content:center;margin-top:22px;}
+  .morebar .chip{padding:9px 18px;font-size:12px;}
+  .pbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0;}
+  .pbody h3{font-size:15px;font-weight:700;color:var(--ink);}
+  .pbody p{margin:0;font-size:12.6px;color:var(--ink-dim);}
+  .actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px;padding-top:4px;}
+  .abtn{font-family:var(--mono);font-size:11.5px;padding:6px 11px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);text-decoration:none;cursor:pointer;}
+  .abtn.main{border-color:var(--accent);color:var(--accent);}
+  .abtn:hover{background:var(--accent);color:#04100b;border-color:var(--accent);}
+  .abtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .sub-title{display:flex;align-items:center;gap:10px;margin:34px 0 14px;font-size:12px;color:var(--ink-dim);}
+  .sub-title b{color:var(--accent);font-weight:600;} .sub-title::after{content:"";flex:1;height:1px;background:var(--line);}
+  .labs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
+  .lab{border:1px dashed var(--line);background:var(--panel-2);padding:14px 16px;min-width:0;}
+  .lab .cid{font-size:10.5px;color:var(--accent);} .lab h4{font-size:13.5px;font-weight:700;margin:3px 0 6px;color:var(--ink);}
+  .lab p{margin:0;font-size:12.3px;color:var(--ink-dim);}
+  .more{margin-top:22px;font-size:12.5px;color:var(--ink-dim);}
+
+  /* ---- competences ---- */
+  .sk-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+  @media (max-width:1000px){.sk-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media (max-width:560px){.sk-grid{grid-template-columns:1fr;}}
+  .sk h3{font-size:11.5px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;font-weight:700;}
+  .sk .tag::before,.sk .tag::after{color:var(--blue);}
+
+  /* ---- contact ---- */
+  .ct-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 28px;}
+  @media (max-width:640px){.ct-grid{grid-template-columns:1fr;}}
+  .field .k{color:var(--ink-faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;display:block;margin-bottom:3px;}
+  .field .k::before{content:"// ";color:var(--line);}
+  .field .v-row{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap;}
+  .field .v{font-size:13.5px;color:var(--ink);word-break:break-word;min-width:0;}
+  .btn{font-family:var(--mono);font-size:10px;border:1px solid var(--line);background:transparent;color:var(--ink-dim);padding:3px 8px;cursor:pointer;flex:none;}
+  .btn:hover{color:var(--accent);border-color:var(--accent);}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  a.ext{text-decoration:none;border-bottom:1px dashed var(--accent-dim);}
+  a.ext:hover{border-bottom-style:solid;}
+  a.ext:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  footer{margin-top:48px;padding-top:14px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:10.5px;color:var(--ink-faint);}
+  footer .ok{color:var(--accent);}
+
+  /* ---- detail dialog ---- */
+  dialog{border:1px solid var(--accent-dim);background:var(--panel);color:var(--ink);padding:0;width:min(940px, calc(100vw - 24px));max-width:none;max-height:calc(100vh - 24px);overflow:auto;font-family:var(--mono);}
+  dialog::backdrop{background:rgba(4,7,9,.84);}
+  .dlg-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel-2);border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink-dim);}
+  .dlg-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dlg-close{font-family:var(--mono);font-size:11px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:4px 10px;cursor:pointer;}
+  .dlg-close:hover{border-color:var(--red);color:var(--red);}
+  .dlg-close:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .dlg-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:14px;}
+  .dlg-body h3{font-size:18px;font-weight:800;}
+  .dlg-body p{margin:0;font-size:13px;color:var(--ink-dim);}
+  .run{font-size:12px;color:var(--ink-dim);border-left:2px solid var(--accent-dim);padding-left:10px;}
+  .run b{color:var(--accent);font-weight:600;}
+  .dlg-body img{display:block;max-width:100%;height:auto;border:1px solid var(--line);}
+  .shots2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  @media (max-width:560px){.shots2{grid-template-columns:1fr;}}
+  .shots2 figcaption,.wide-cap{font-size:10.5px;color:var(--ink-dim);padding-top:5px;}
+  .shots2 figure{margin:0;min-width:0;}
+  .wide{overflow-x:auto;border:1px solid var(--line);background:#1c1b2b;}
+  .wide img{min-width:900px;width:100%;border:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .pcard,.thumb img{transition:none;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div class="page gutter">
+
+  <nav class="nav" aria-label="Sections">
+    <span class="brand"><b>mzbarkat</b>@portfolio:~$</span>
+    <div class="links">
+      <a href="#parcours" data-spy="parcours" style="--sec-c:var(--amber)">./parcours</a>
+      <a href="#projets" data-spy="projets" style="--sec-c:var(--accent)">./projets</a>
+      <a href="#competences" data-spy="competences" style="--sec-c:var(--blue)">./compétences</a>
+      <a href="#contact" data-spy="contact" style="--sec-c:var(--accent)">./contact</a>
+    </div>
+    <span class="status"><span class="led live"></span> access granted</span>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <div class="prompt"><span class="op">$</span> whoami <span class="typed">&nbsp;</span></div>
+      <h1 class="name">Mohamed <span class="hi">Zineddine</span> Barkat</h1>
+      <div class="role-line">&gt; Cybersécurité — Systèmes, Réseaux &amp; Sécurité</div>
+      <p class="brief">À la recherche d'une alternance en cybersécurité de 24 mois (rythme 1 semaine entreprise / 1 semaine université) pour le Master Conception de Systèmes et Cybersécurité de l'Université Paris&#8209;Est Créteil.</p>
+      <div class="cta">
+        <a class="btn-primary" href="#projets">Voir mes projets</a>
+        <a class="btn-ghost" href="#parcours">Mon parcours</a>
+        <a class="btn-ghost" href="#contact">Me contacter</a>
+      </div>
+      <div class="status-chip"><span class="led live"></span> statut : <b>alternance en cours</b> — Eurocom Broadcast, Paris</div>
+    </div>
+    <div class="hero-3d" id="globe" aria-hidden="true">
+      <div class="hud tl">NET.TOPOLOGY // <b id="hud-n">120</b> nœuds</div>
+      <div class="hud bl"><span class="amb">●</span> <span id="hud-p">16</span> paquets en transit</div>
+      <div class="hud br"><span class="rd">●</span> <span id="hud-t">3</span> menaces isolées</div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><span class="big">Top 4%</span><span class="txt">TryHackMe — 67 rooms terminées</span></div>
+    <div class="stat"><span class="big">BTL1</span><span class="txt">Blue Team Labs Online — certification préparée</span></div>
+    <div class="stat"><span class="big">HTB</span><span class="txt">Parcours Junior Penetration Tester</span></div>
+  </div>
+
+  <!-- ===================== PARCOURS ===================== -->
+  <section class="zone" id="parcours">
+    <div class="zone-head">
+      <div class="zone-title"><span class="n">01 /</span><h2>Parcours</h2></div>
+      <p class="zone-sub">Mes expériences en entreprise, mes études et mes langues.</p>
+    </div>
+
+    <div class="par-grid">
+      <div class="term">
+        <div class="term-bar"><div class="dots"><span></span><span></span><span></span></div>experience.log</div>
+        <div class="term-body">
+          <h3>Expérience professionnelle</h3>
+
+          <div class="log">
+            <div class="log-top"><span class="badge alt">Alternance</span><span class="log-date">sept. 2026 → présent</span></div>
+            <h3>Administrateur Systèmes, Réseaux &amp; Sécurité</h3>
+            <div class="log-org">Eurocom Broadcast, Paris</div>
+            <ul>
+              <li>Déploiement d'un VPN WireGuard / IPsec pour le télétravail</li>
+              <li>Mise en place de pare-feux et segmentation VLAN</li>
+              <li>Durcissement des serveurs selon les CIS Benchmarks et le guide d'hygiène ANSSI</li>
+              <li>Mise en place du MFA et de la politique de gestion des mots de passe</li>
+              <li>Supervision et détection des menaces (SIEM Wazuh, IDS/IPS Suricata)</li>
+              <li>Plan de sauvegarde avec tests de restauration</li>
+              <li>Rédaction de la PSSI et des procédures de réponse à incident</li>
+            </ul>
+          </div>
+
+          <div class="log">
+            <div class="log-top"><span class="badge stage">Stage</span><span class="log-date">avril → juillet 2026</span></div>
+            <h3>Sécurité réseau Kubernetes</h3>
+            <div class="log-org">CERIST, Alger</div>
+            <ul>
+              <li>Micro-segmentation d'un cluster Kubernetes avec Cilium (politiques réseau L3 à L7 : HTTP, DNS, gRPC)</li>
+              <li>Analyse des flux réseau et validation des règles Zero Trust en temps réel avec Hubble</li>
+              <li>Automatisation du déploiement et des tests de politiques (Bash, YAML, eBPF)</li>
+            </ul>
+          </div>
+
+          <div class="log">
+            <div class="log-top"><span class="badge free">Freelance</span><span class="log-date">fév. → juillet 2025</span></div>
+            <h3>Développeur Full Stack</h3>
+            <div class="log-org">Projet indépendant</div>
+            <ul>
+              <li>Conception et développement de plateformes e-commerce complètes (front, back, base de données) avec le stack MERN</li>
+              <li>Conception d'un widget de recherche et d'achats connecté à une API REST</li>
+            </ul>
+          </div>
+
+          <div class="log">
+            <div class="log-top"><span class="badge stage">Stage</span><span class="log-date">août 2024</span></div>
+            <h3>Administration de réseaux informatiques</h3>
+            <div class="log-org">SEAAL, Alger</div>
+            <ul>
+              <li>Configuration et gestion des équipements réseau Fortinet et surveillance active des flux</li>
+              <li>Support technique aux utilisateurs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="par-side">
+        <div class="term">
+          <div class="term-bar"><div class="dots"><span></span><span></span><span></span></div>formation.yaml</div>
+          <div class="term-body">
+            <h3>Formation</h3>
+            <div class="edu-row">
+              <span class="yr">2026 → présent</span>
+              <div class="deg">Master Conception des systèmes et cybersécurité (M1)</div>
+              <div class="where">Université Paris-Est Créteil, France</div>
+            </div>
+            <div class="edu-row">
+              <span class="yr">2025 → 2026</span>
+              <div class="deg">Licence Informatique (L3)</div>
+              <div class="where">Université de Lille, France</div>
+            </div>
+            <div class="edu-row">
+              <span class="yr">2021 → 2025</span>
+              <div class="deg">Ingéniorat en cybersécurité (BAC+4)</div>
+              <div class="where">École Supérieure en Sciences et Technologies de l'Informatique et du Numérique, Algérie</div>
+            </div>
+          </div>
+        </div>
+        <div class="term">
+          <div class="term-bar"><div class="dots"><span></span><span></span><span></span></div>locale -a</div>
+          <div class="term-body">
+            <h3>Langues</h3>
+            <div class="lang-row"><span>Français</span><span>bilingue</span></div>
+            <div class="lang-row"><span>Anglais</span><span>intermédiaire — B2</span></div>
+            <div class="lang-row"><span>Arabe</span><span>langue maternelle</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJETS ===================== -->
+  <section class="zone" id="projets">
+    <div class="zone-head">
+      <div class="zone-title"><span class="n">02 /</span><h2>Projets</h2></div>
+      <p class="zone-sub">Ce que j'ai construit et lancé en local. Clique sur une carte pour voir les captures et les détails.</p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filtrer les projets">
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">Tous</button>
+      <button class="chip" type="button" data-filter="sec" aria-pressed="false">Sécurité</button>
+      <button class="chip" type="button" data-filter="web" aria-pressed="false">Web</button>
+      <button class="chip" type="button" data-filter="soft" aria-pressed="false">Logiciel &amp; IA</button>
+    </div>
+
+    <div class="pgrid" style="margin-top:18px">
+      <article class="pcard" data-cat="sec">
+        <button class="thumb" type="button" data-open="phishing" data-path="~/projects/phishing-agent" aria-label="Voir les détails : agent de triage de phishing">
+          <img src="img/phishing-agent.png" alt="Sortie du script d'extraction d'un email de phishing" loading="lazy"><span class="kind sec">Sécurité</span>
+        </button>
+        <div class="pbody">
+          <h3>Agent IA de triage de phishing</h3>
+          <p>Trie les emails suspects comme un analyste SOC : SPF / DKIM / DMARC, URL, pièces jointes, enrichissement VirusTotal et rapport d'incident.</p>
+          <div class="tagset"><span class="tag">Python</span><span class="tag">LLM</span><span class="tag">VirusTotal</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="phishing" data-path="~/projects/phishing-agent">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/phishing-agent" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="soft">
+        <button class="thumb" type="button" data-open="velo" data-path="~/projects/V_LILLE_JAVA" aria-label="Voir les détails : simulation de vélos en libre-service">
+          <img src="img/velo-sim.png" alt="Terminal : simulation de vélos et 18 tests réussis" loading="lazy"><span class="kind soft">Logiciel</span>
+        </button>
+        <div class="pbody">
+          <h3>Simulation de vélos en libre-service</h3>
+          <p>Réseau de stations de vélos (type VLille) avec patrons Composite, Decorator, Observer, Singleton et Strategy. 18 tests JUnit.</p>
+          <div class="tagset"><span class="tag">Java</span><span class="tag">Maven</span><span class="tag">JUnit 5</span><span class="tag">UML</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="velo" data-path="~/projects/V_LILLE_JAVA">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/V_LILLE_JAVA" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web">
+        <button class="thumb" type="button" data-open="rps" data-path="~/projects/Realtime_RPS" aria-label="Voir les détails : Pierre-Feuille-Ciseaux en temps réel">
+          <img src="img/rps-joueur1.png" alt="Jeu Pierre-Feuille-Ciseaux : écran du joueur gagnant" loading="lazy"><span class="kind web">Web</span>
+        </button>
+        <div class="pbody">
+          <h3>Pierre-Feuille-Ciseaux en temps réel</h3>
+          <p>Jeu à deux joueurs : serveur Node.js, WebSocket (Socket.IO) et client empaqueté avec Webpack.</p>
+          <div class="tagset"><span class="tag">Node.js</span><span class="tag">Socket.IO</span><span class="tag">Webpack</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="rps" data-path="~/projects/Realtime_RPS">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/Realtime_RPS" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web">
+        <button class="thumb" type="button" data-open="boutique" data-path="~/projects/boutiquehanafi" aria-label="Voir les détails : boutique en ligne MERN">
+          <img src="img/boutique.png" alt="Page d'accueil de la boutique de sneakers" loading="lazy"><span class="kind web">Web</span>
+        </button>
+        <div class="pbody">
+          <h3>Boutique en ligne de sneakers</h3>
+          <p>Plateforme e-commerce complète : vitrine React, API Express avec JWT, MongoDB, Cloudinary et panneau d'administration.</p>
+          <div class="tagset"><span class="tag">React</span><span class="tag">Express</span><span class="tag">MongoDB</span><span class="tag">JWT</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="boutique" data-path="~/projects/boutiquehanafi">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/boutiquehanafi" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="soft">
+        <button class="thumb" type="button" data-open="movies" data-path="~/projects/Ai-Project" aria-label="Voir les détails : système expert de recommandation de films">
+          <img src="img/movies-api.png" alt="Terminal : requête POST à l'API et film recommandé" loading="lazy"><span class="kind soft">Logiciel · IA</span>
+        </button>
+        <div class="pbody">
+          <h3>Système expert de recommandation de films</h3>
+          <p>API Django dont un moteur d'inférence en logique du premier ordre (chaînage avant) déduit un genre puis recommande un film selon la langue, l'époque, le genre et l'acteur.</p>
+          <div class="tagset"><span class="tag">Python</span><span class="tag">Django REST</span><span class="tag">aima3</span><span class="tag">Logique 1er ordre</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="movies" data-path="~/projects/Ai-Project">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/Ai-Project" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web">
+        <button class="thumb" type="button" data-open="sina" data-path="~/projects/SinaLab" aria-label="Voir les détails : plateforme SinaLab">
+          <img src="img/sinalab.png" alt="Page d'accueil de SinaLab : citation sur la santé et accès professionnel, patient" loading="lazy"><span class="kind web">Web</span>
+        </button>
+        <div class="pbody">
+          <h3>SinaLab, plateforme de laboratoire d'analyses</h3>
+          <p>Espaces patient et professionnel, réservations, annonces, publications et résultats d'analyses. Front React, back Express avec MongoDB. En cours de développement.</p>
+          <div class="tagset"><span class="tag">React</span><span class="tag">Express</span><span class="tag">MongoDB</span><span class="tag">Passport</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="sina" data-path="~/projects/SinaLab">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/SinaLabInfo" target="_blank" rel="noopener">Front ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/SinaLab" target="_blank" rel="noopener">Back ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web" data-extra>
+        <button class="thumb" type="button" data-open="widget" data-path="~/projects/widget-react" aria-label="Voir les détails : widget de comparaison de produits">
+          <img src="img/widget.png" alt="Widget TechSpecs : recherche d'appareil et comparaison de produits" loading="lazy" style="object-position:50% 38%"><span class="kind web">Web</span>
+        </button>
+        <div class="pbody">
+          <h3>Widget de recherche et comparaison de produits</h3>
+          <p>Widget React intégrable : recherche d'appareils, fiche détaillée et comparaison, alimenté par l'API REST TechSpecs.</p>
+          <div class="tagset"><span class="tag">React</span><span class="tag">API REST</span><span class="tag">CSS</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="widget" data-path="~/projects/widget-react">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/widget-react" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web" data-extra>
+        <button class="thumb" type="button" data-open="estin" data-path="~/projects/estin-bib" aria-label="Voir les détails : ESTIN Bib">
+          <img src="img/estin-bib.png" alt="Accueil d'ESTIN Bib : menu par niveau et illustration de la bibliothèque" loading="lazy"><span class="kind web">Web</span>
+        </button>
+        <div class="pbody">
+          <h3>ESTIN Bib, ressources par niveau</h3>
+          <p>Bibliothèque de ressources pédagogiques de l'ESTIN : pour chaque année (1CP à 3CS), les modules par semestre avec leurs onglets TD, cours et examens.</p>
+          <div class="tagset"><span class="tag">React 18</span><span class="tag">JSON</span><span class="tag">CSS</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="estin" data-path="~/projects/estin-bib">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/estin-bib" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="soft" data-extra>
+        <button class="thumb" type="button" data-open="pyqt" data-path="~/projects/PyQt_Canvas" aria-label="Voir les détails : application de dessin PyQt5">
+          <img src="img/pyqt.png" alt="Application de dessin PyQt5 avec trois tracés de couleurs différentes" loading="lazy"><span class="kind soft">Logiciel</span>
+        </button>
+        <div class="pbody">
+          <h3>Application de dessin PyQt5</h3>
+          <p>Traits à la souris, choix de la couleur, épaisseur réglable par curseur et bouton d'effacement, plus un bouton elliptique interactif séparé en modèle et vue.</p>
+          <div class="tagset"><span class="tag">Python</span><span class="tag">PyQt5</span><span class="tag">Signaux / slots</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="pyqt" data-path="~/projects/PyQt_Canvas">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/PyQt_Canvas" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web" data-extra>
+        <button class="thumb" type="button" data-open="gdsc" data-path="~/projects/GDSC-Email-Template" aria-label="Voir les détails : modèle d'email GDSC ESTIN">
+          <img src="img/gdsc.png" alt="Modèle d'email GDSC ESTIN avec message de bienvenue et bouton Fill The Form" loading="lazy"><span class="kind web">Web</span>
+        </button>
+        <div class="pbody">
+          <h3>Modèle d'email GDSC ESTIN</h3>
+          <p>Email HTML aux couleurs du club GDSC ESTIN : logo, message de bienvenue, bouton d'appel à l'action et liens vers les réseaux sociaux.</p>
+          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Email</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="gdsc" data-path="~/projects/GDSC-Email-Template">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/GDSC-Email-Template" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web" data-extra>
+        <button class="thumb" type="button" data-open="vet" data-path="~/projects/ecommerceVet" aria-label="Voir les détails : boutique de vêtements">
+          <img src="img/vetements.png" alt="Page d'accueil de la boutique de vêtements : Latest Arrivals" loading="lazy"><span class="kind web">Web</span>
+        </button>
+        <div class="pbody">
+          <h3>Boutique de vêtements (MERN)</h3>
+          <p>Boutique en ligne complète : vitrine React, API Express, base MongoDB et panneau d'administration.</p>
+          <div class="tagset"><span class="tag">React</span><span class="tag">Express</span><span class="tag">MongoDB</span><span class="tag">Tailwind</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="vet" data-path="~/projects/ecommerceVet">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/ecommerceVet" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web" data-extra>
+        <button class="thumb" type="button" data-open="auzia" data-path="~/projects/auziastore" aria-label="Voir les détails : Auzia Force, boutique de nutrition sportive">
+          <img src="img/auzia.png" alt="Accueil d'Auzia Force Gym et Nutrition : compléments alimentaires" loading="lazy"><span class="kind web">Web</span>
+        </button>
+        <div class="pbody">
+          <h3>Auzia Force, gym &amp; nutrition</h3>
+          <p>Boutique de compléments et nutrition sportive : vitrine React en arabe, API Express, base MongoDB et panneau d'administration.</p>
+          <div class="tagset"><span class="tag">React</span><span class="tag">Express</span><span class="tag">MongoDB</span><span class="tag">Tailwind</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="auzia" data-path="~/projects/auziastore">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/auziastore" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="morebar"><button class="chip" type="button" id="more-btn" aria-expanded="false">Afficher les autres projets</button></div>
+
+    <div data-cat="sec" id="labs-wrap">
+      <div class="sub-title"><b>Labs &amp; CTF</b> entraînement continu, sans dépôt public</div>
+      <div class="labs">
+        <div class="lab"><span class="cid">0x01</span><h4>Blue Team &amp; SOC</h4><p>Entraînement sur Blue Team Labs Online en vue de la certification BTL1. Analyse de trafic réseau (Wireshark, PCAP, protocoles TCP/IP, DNS, HTTP).</p></div>
+        <div class="lab"><span class="cid">0x02</span><h4>Analyse de malware</h4><p>Analyse statique et dynamique d'un échantillon malveillant (type trojan) dans un environnement sandbox isolé (FLARE-VM / REMnux).</p></div>
+        <div class="lab"><span class="cid">0x03</span><h4>Pentesting &amp; Red Teaming</h4><p>Top 4% TryHackMe (67 rooms), parcours Junior Penetration Tester sur HackTheBox. Exploitation web (OWASP Top 10 : injection, XSS, IDOR…), élévation de privilèges Linux, reconnaissance (Nmap, Metasploit), reverse engineering et exploitation binaire sur Pwnable.kr, plusieurs CTF universitaires.</p></div>
+      </div>
+    </div>
+
+    <p class="more">Aussi sur GitHub : <a class="ext" href="https://github.com/Barkatzineddine/bddProject_backend" target="_blank" rel="noopener">bddProject_backend</a> (API REST Node.js et MySQL : produits, commandes, avis, utilisateurs, JWT) et <a class="ext" href="https://github.com/Barkatzineddine/the_estin_bib" target="_blank" rel="noopener">the_estin_bib</a> (première version d'ESTIN Bib). Tous mes dépôts : <a class="ext" href="https://github.com/Barkatzineddine" target="_blank" rel="noopener">github.com/Barkatzineddine ↗</a></p>
+  </section>
+
+  <!-- ===================== COMPETENCES ===================== -->
+  <section class="zone" id="competences">
+    <div class="zone-head">
+      <div class="zone-title"><span class="n">03 /</span><h2>Compétences</h2></div>
+      <p class="zone-sub">Les outils et technologies que j'utilise, par domaine.</p>
+    </div>
+    <div class="sk-grid">
+      <div class="term sk"><div class="term-body">
+        <h3>Cybersécurité</h3>
+        <div class="tagset">
+          <span class="tag">Pentest</span><span class="tag">Sécurité web</span><span class="tag">Metasploit</span><span class="tag">Nmap</span>
+          <span class="tag">Burp Suite</span><span class="tag">GDB</span><span class="tag">Analyse binaire</span><span class="tag">AI red teaming</span>
+          <span class="tag">OWASP Top 10</span><span class="tag">Priv. esc. Linux</span>
+        </div>
+      </div></div>
+      <div class="term sk"><div class="term-body">
+        <h3>Conception &amp; systèmes</h3>
+        <div class="tagset"><span class="tag">Java</span><span class="tag">Python</span><span class="tag">Kubernetes</span><span class="tag">Docker</span><span class="tag">Bash</span></div>
+      </div></div>
+      <div class="term sk"><div class="term-body">
+        <h3>Réseaux &amp; OS</h3>
+        <div class="tagset"><span class="tag">CCNA2</span><span class="tag">Linux</span><span class="tag">Windows</span><span class="tag">Active Directory</span><span class="tag">VMware</span><span class="tag">Wireshark</span></div>
+      </div></div>
+      <div class="term sk"><div class="term-body">
+        <h3>Bases de données</h3>
+        <div class="tagset"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">PostgreSQL</span></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="zone" id="contact">
+    <div class="zone-head">
+      <div class="zone-title"><span class="n">04 /</span><h2>Contact</h2></div>
+      <p class="zone-sub">Je cherche une alternance de 24 mois en cybersécurité (1 semaine entreprise / 1 semaine université).</p>
+    </div>
+    <div class="term">
+      <div class="term-bar"><div class="dots"><span></span><span></span><span></span></div>contact.sh</div>
+      <div class="term-body">
+        <div class="ct-grid">
+          <div class="field"><span class="k">email</span><div class="v-row"><span class="v" id="val-email">mbarkat0312@gmail.com</span><button class="btn" type="button" data-copy="mbarkat0312@gmail.com" data-target="val-email">copy</button></div></div>
+          <div class="field"><span class="k">github</span><div class="v-row"><a class="ext v" href="https://github.com/Barkatzineddine" target="_blank" rel="noopener">github.com/Barkatzineddine</a></div></div>
+          <div class="field"><span class="k">linkedin</span><div class="v-row"><a class="ext v" href="https://www.linkedin.com/in/mohamed-zineddine-barkat/" target="_blank" rel="noopener">linkedin.com/in/mohamed&#8209;zineddine&#8209;barkat</a></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span><span class="ok">process exited 0</span> — fin de session MZB&#8209;2026&#8209;CYBER</span>
+    <span>mbarkat0312@gmail.com</span>
+  </footer>
+</div>
+
+<dialog id="detail" aria-labelledby="dlg-title">
+  <div class="dlg-bar"><div class="dots"><span></span><span></span><span></span></div><span class="dlg-title" id="dlg-title"></span><button class="dlg-close" type="button">fermer ✕</button></div>
+  <div class="dlg-body"></div>
+</dialog>
+
+<template id="t-phishing">
+  <h3>Agent IA de triage de phishing</h3>
+  <p>Agent qui trie les emails suspects comme un analyste SOC de niveau 1 : analyse des en-têtes SPF / DKIM / DMARC, extraction des URL et des pièces jointes (hash SHA256), puis un LLM choisit lui-même quels indicateurs vérifier sur VirusTotal et rédige un rapport d'incident avec verdict, niveau de risque et actions recommandées.</p>
+  <div class="tagset"><span class="tag">Python</span><span class="tag">LLM · API Groq</span><span class="tag">VirusTotal API v3</span><span class="tag">SPF / DKIM / DMARC</span></div>
+  <div class="run"><b>Exécuté en local</b> : l'étape d'extraction sur l'email de test (capture ci-dessous). L'analyse par le LLM et VirusTotal demande des clés API Groq et VirusTotal.</div>
+  <img src="img/phishing-agent.png" alt="Extraction : SPF fail, DKIM none, DMARC fail, URL suspecte et pièce jointe facture.exe avec son hash SHA256">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/phishing-agent" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-velo">
+  <h3>Simulation de vélos en libre-service</h3>
+  <p>Projet de Conception Orientée Objet (Licence Informatique, Université de Lille) : simulation d'un réseau de stations de vélos classiques et électriques, avec dépôt, retrait et redistribution des vélos par un centre de contrôle. Le diagramme UML met en œuvre les patrons Composite, Decorator, Observer, Singleton et Strategy.</p>
+  <div class="tagset"><span class="tag">Java</span><span class="tag">Maven</span><span class="tag">JUnit 5</span><span class="tag">Design patterns</span><span class="tag">UML</span></div>
+  <div class="run"><b>Compilé et exécuté en local</b> (Java 24, Maven) : la simulation tourne et les <b>18 tests JUnit</b> passent.</div>
+  <img src="img/velo-sim.png" alt="Terminal : sortie de la simulation puis mvn test avec 18 tests réussis">
+  <div><div class="wide"><img src="img/velo-uml.png" alt="Diagramme UML : Bike, LocationComponent, StationObserver, RedistributionStrategy, Station, User, ControlCenter et décorateurs"></div><div class="wide-cap">Diagramme UML du projet (faire défiler horizontalement)</div></div>
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/V_LILLE_JAVA" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-rps">
+  <h3>Pierre-Feuille-Ciseaux en temps réel</h3>
+  <p>Jeu à deux joueurs connectés depuis deux navigateurs différents : le serveur Node.js gère les états de la partie (attente, prêt, résultat, départ d'un joueur) et diffuse le résultat à chacun par WebSocket. Code client empaqueté avec Webpack.</p>
+  <div class="tagset"><span class="tag">Node.js</span><span class="tag">Socket.IO</span><span class="tag">Webpack</span><span class="tag">JavaScript</span></div>
+  <div class="run"><b>Lancé en local</b> : partie jouée entre deux navigateurs, le joueur 1 choisit Pierre et le joueur 2 Ciseaux.</div>
+  <div class="shots2">
+    <figure><img src="img/rps-joueur1.png" alt="Joueur 1 : « CONGRATS YOU WON »"><figcaption>Joueur 1 — victoire</figcaption></figure>
+    <figure><img src="img/rps-joueur2.png" alt="Joueur 2 : « UNFORTUNATLY YOU LOSE »"><figcaption>Joueur 2 — défaite</figcaption></figure>
+  </div>
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/Realtime_RPS" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-boutique">
+  <h3>Boutique en ligne de sneakers (MERN)</h3>
+  <p>Plateforme e-commerce complète : vitrine React (accueil, collection, fiche produit, panier, commande), API Express avec authentification JWT, base MongoDB, images sur Cloudinary et panneau d'administration séparé.</p>
+  <div class="tagset"><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Tailwind</span><span class="tag">Express</span><span class="tag">MongoDB</span><span class="tag">JWT</span></div>
+  <div class="run"><b>Interface lancée en local</b> (Vite). Le back-end (MongoDB, Cloudinary) n'est pas démarré : la capture montre la vitrine sans catalogue.</div>
+  <img src="img/boutique.png" alt="Page d'accueil de la boutique : sneakers, titre en arabe et bouton vers la collection">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/boutiquehanafi" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-movies">
+  <h3>Système expert de recommandation de films</h3>
+  <p>API Django dans laquelle un moteur d'inférence en logique du premier ordre (bibliothèque aima3, chaînage avant) déduit d'abord un genre de film à partir de la langue, du type, de l'époque et du genre, puis recommande un titre selon l'acteur principal. La base de faits et les règles sont écrites dans le projet.</p>
+  <div class="tagset"><span class="tag">Python</span><span class="tag">Django REST</span><span class="tag">aima3</span><span class="tag">Logique du 1er ordre</span><span class="tag">Chaînage avant</span></div>
+  <div class="run"><b>Lancé en local</b> : une requête POST à l'API renvoie le film recommandé (capture ci-dessous). Les valeurs possibles sont celles de la base de faits du projet.</div>
+  <img src="img/movies-api.png" alt="Requête POST sur /api/movie et réponse : OnceUponaTimeintheWest">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/Ai-Project" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-sina">
+  <h3>SinaLab, plateforme de laboratoire d'analyses</h3>
+  <p>Plateforme web pour un laboratoire : espaces patient et professionnel, réservations, annonces, publications, retours des utilisateurs et consultation des résultats d'analyses. Le front est une application React (SinaLabInfo) et le back un serveur Express avec vues EJS, MongoDB et authentification Passport. Projet en cours de développement.</p>
+  <div class="tagset"><span class="tag">React</span><span class="tag">Express</span><span class="tag">MongoDB</span><span class="tag">Passport</span><span class="tag">EJS</span><span class="tag">D3</span></div>
+  <div class="run"><b>Interface lancée en local</b> (version compilée du front React). Le back-end (MongoDB) n'est pas démarré : seule la page d'accueil est montrée.</div>
+  <img src="img/sinalab.png" alt="Page d'accueil de SinaLab : citation, entrées Professionnel, Patient et Nous connaître">
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/SinaLabInfo" target="_blank" rel="noopener">Front sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/SinaLab" target="_blank" rel="noopener">Back sur GitHub ↗</a></div>
+</template>
+
+<template id="t-widget">
+  <h3>Widget de recherche et comparaison de produits</h3>
+  <p>Widget React intégrable dans une page : recherche d'appareils par nom, fiche détaillée d'un produit et comparaison côte à côte. Les données viennent de l'API REST TechSpecs.</p>
+  <div class="tagset"><span class="tag">React</span><span class="tag">API REST</span><span class="tag">CSS</span></div>
+  <div class="run"><b>Interface lancée en local.</b> Les recherches appellent l'API TechSpecs, qui demande une clé : cette partie n'a pas été testée.</div>
+  <img src="img/widget.png" alt="Widget TechSpecs avec champ de recherche et bouton Compare Products" style="max-width:420px">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/widget-react" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-estin">
+  <h3>ESTIN Bib, ressources par niveau</h3>
+  <p>Bibliothèque de ressources pédagogiques de l'ESTIN. Pour chaque année (1CP, 2CP, 1CS, 2CS, 3CS), les modules sont classés par semestre avec des onglets TD, cours et examens. Les données sont décrites dans un fichier JSON et affichées par des composants React.</p>
+  <div class="tagset"><span class="tag">React 18</span><span class="tag">JSON</span><span class="tag">CSS</span></div>
+  <div class="run"><b>Lancé en local</b> (React, serveur de développement).</div>
+  <img src="img/estin-bib.png" alt="Accueil d'ESTIN Bib : menu Accueil, 1CP, 2CP, 1CS, 2CS, 3CS et bouton Contribuer">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/estin-bib" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-pyqt">
+  <h3>Application de dessin PyQt5</h3>
+  <p>Application de bureau de dessin : traits à la souris, choix de la couleur, épaisseur réglable par un curseur et bouton « Effacer ». Le dépôt contient aussi un bouton elliptique interactif (survol, appui) dont l'état est séparé de l'affichage dans un modèle.</p>
+  <div class="tagset"><span class="tag">Python</span><span class="tag">PyQt5</span><span class="tag">Signaux / slots</span><span class="tag">Modèle / vue</span></div>
+  <div class="run"><b>Lancé en local.</b> La capture montre trois traits (couleurs et épaisseurs différentes) tracés par des événements souris simulés par un script.</div>
+  <img src="img/pyqt.png" alt="Fenêtre de dessin avec une spirale rouge, une vague bleue et un cercle vert" style="max-width:640px">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/PyQt_Canvas" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-gdsc">
+  <h3>Modèle d'email GDSC ESTIN</h3>
+  <p>Email HTML aux couleurs du club GDSC ESTIN : logo, message de bienvenue, bouton d'appel à l'action « Fill The Form » et liens vers les réseaux sociaux.</p>
+  <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Email</span></div>
+  <div class="run"><b>Ouvert dans le navigateur.</b> Les textes sont encore ceux du modèle (lorem ipsum).</div>
+  <img src="img/gdsc.png" alt="Modèle d'email : logo GDSC ESTIN, Welcome, bouton Fill The Form, icônes de réseaux sociaux" style="max-width:640px">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/GDSC-Email-Template" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-vet">
+  <h3>Boutique de vêtements (MERN)</h3>
+  <p>Boutique en ligne complète : vitrine React (accueil, collection, produit, panier), API Express, base MongoDB et panneau d'administration séparé.</p>
+  <div class="tagset"><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Tailwind</span><span class="tag">Express</span><span class="tag">MongoDB</span></div>
+  <div class="run"><b>Interface lancée en local</b> (Vite). Le back-end (MongoDB) n'est pas démarré : la capture montre la vitrine sans catalogue.</div>
+  <img src="img/vetements.png" alt="Accueil de la boutique de vêtements : bannière Latest Arrivals">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/ecommerceVet" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<template id="t-auzia">
+  <h3>Auzia Force, gym &amp; nutrition</h3>
+  <p>Boutique de compléments et de nutrition sportive : vitrine React en arabe, API Express, base MongoDB et panneau d'administration séparé.</p>
+  <div class="tagset"><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Tailwind</span><span class="tag">Express</span><span class="tag">MongoDB</span></div>
+  <div class="run"><b>Interface lancée en local</b> (Vite). Le back-end (MongoDB) n'est pas démarré : la capture montre la vitrine sans catalogue.</div>
+  <img src="img/auzia.png" alt="Accueil d'Auzia Force : bannière avec pots de protéines et logo">
+  <a class="abtn main" style="align-self:flex-start" href="https://github.com/Barkatzineddine/auziastore" target="_blank" rel="noopener">Code source sur GitHub ↗</a>
+</template>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- in-page navigation + scroll spy ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var t = document.getElementById(a.getAttribute('href').slice(1));
+      if (!t) return;
+      e.preventDefault();
+      t.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+    });
+  });
+  var links = {};
+  document.querySelectorAll('[data-spy]').forEach(function(a){ links[a.getAttribute('data-spy')] = a; });
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          Object.keys(links).forEach(function(k){ links[k].classList.toggle('on', k === en.target.id); });
+        }
+      });
+    }, {rootMargin:'-35% 0px -60% 0px'});
+    Object.keys(links).forEach(function(k){ var s = document.getElementById(k); if (s) spy.observe(s); });
+  }
+
+  /* ---------- project filters ---------- */
+  var chips = document.querySelectorAll('.chip[data-filter]');
+  var moreBtn = document.getElementById('more-btn');
+  var filter = 'all', expanded = false;
+  function applyFilter(){
+    var hiddenExtra = 0;
+    document.querySelectorAll('#projets [data-cat]').forEach(function(el){
+      var match = filter === 'all' || el.getAttribute('data-cat') === filter;
+      var isExtra = el.hasAttribute('data-extra');
+      if (match && isExtra && !expanded) hiddenExtra++;
+      el.hidden = !match || (isExtra && !expanded);
+    });
+    moreBtn.parentElement.hidden = hiddenExtra === 0 && !expanded;
+    moreBtn.textContent = expanded ? 'Réduire la liste' : 'Afficher les ' + hiddenExtra + ' autres projets';
+    moreBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  }
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){
+      filter = c.getAttribute('data-filter');
+      chips.forEach(function(x){ x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+      applyFilter();
+    });
+  });
+  moreBtn.addEventListener('click', function(){ expanded = !expanded; applyFilter(); });
+  applyFilter();
+
+  /* ---------- project detail dialog ---------- */
+  var dlg = document.getElementById('detail');
+  var body = dlg.querySelector('.dlg-body');
+  document.querySelectorAll('[data-open]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = document.getElementById('t-' + b.getAttribute('data-open'));
+      if (!t) return;
+      body.replaceChildren(t.content.cloneNode(true));
+      document.getElementById('dlg-title').textContent = b.getAttribute('data-path');
+      dlg.scrollTop = 0;
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','');
+    });
+  });
+  dlg.querySelector('.dlg-close').addEventListener('click', function(){ dlg.close(); });
+  dlg.addEventListener('click', function(e){ if (e.target === dlg) dlg.close(); });
+
+  /* ---------- 3D tilt on project cards ---------- */
+  if (!reduce && window.matchMedia && matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.pcard').forEach(function(card){
+      card.addEventListener('pointermove', function(e){
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        card.style.setProperty('--ry', (x * 9).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', (-y * 9).toFixed(2) + 'deg');
+        card.style.setProperty('--gx', ((x + .5) * 100).toFixed(1) + '%');
+        card.style.setProperty('--gy', ((y + .5) * 100).toFixed(1) + '%');
+      });
+      card.addEventListener('pointerleave', function(){
+        card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
+  /* ---------- copy buttons ---------- */
+  document.querySelectorAll('.btn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.getAttribute('data-copy');
+      var done = function(){ var o = btn.textContent; btn.textContent = 'copied'; setTimeout(function(){ btn.textContent = o; }, 1400); };
+      var fallback = function(){
+        var el = document.getElementById(btn.getAttribute('data-target'));
+        if (!el) return;
+        var range = document.createRange(); range.selectNodeContents(el);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(fallback);
+      else fallback();
+    });
+  });
+
+  /* ---------- hero: network globe (Three.js) ---------- */
+  var wrap = document.getElementById('globe');
+  if (!wrap) return;
+  if (!window.THREE) { wrap.classList.add('no-gl'); return; }
+  var cs = getComputedStyle(document.documentElement);
+  var col = function(n){ return new THREE.Color(cs.getPropertyValue(n).trim()); };
+  var cAcc = col('--accent'), cAmb = col('--amber'), cRed = col('--red');
+  var renderer;
+  try { renderer = new THREE.WebGLRenderer({antialias:true, alpha:true}); }
+  catch (err) { wrap.classList.add('no-gl'); return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+  wrap.insertBefore(renderer.domElement, wrap.firstChild);
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  camera.position.set(0, 0, 8.4);
+  var root = new THREE.Group(); scene.add(root);
+
+  var dc = document.createElement('canvas'); dc.width = dc.height = 64;
+  var dx = dc.getContext('2d'), gr = dx.createRadialGradient(32,32,0,32,32,32);
+  gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(.4,'rgba(255,255,255,.85)'); gr.addColorStop(1,'rgba(255,255,255,0)');
+  dx.fillStyle = gr; dx.fillRect(0,0,64,64);
+  var dot = new THREE.CanvasTexture(dc);
+
+  var N = 120, R = 2.4, pts = [];
+  for (var i = 0; i < N; i++) {
+    var y = 1 - (i / (N - 1)) * 2, rr = Math.sqrt(1 - y * y), th = i * 2.399963;
+    var jt = 1 + Math.sin(i * 12.9898) * 0.03;
+    pts.push(new THREE.Vector3(Math.cos(th) * rr * R * jt, y * R * jt, Math.sin(th) * rr * R * jt));
+  }
+  var adj = pts.map(function(){ return []; }), seen = {}, lp = [];
+  for (var a = 0; a < N; a++) {
+    var d = [];
+    for (var b = 0; b < N; b++) if (a !== b) d.push([pts[a].distanceToSquared(pts[b]), b]);
+    d.sort(function(p, q){ return p[0] - q[0]; });
+    for (var k = 0; k < 3; k++) {
+      var nb = d[k][1], key = a < nb ? a + '_' + nb : nb + '_' + a;
+      if (!seen[key]) { seen[key] = 1; adj[a].push(nb); adj[nb].push(a); lp.push(pts[a].x,pts[a].y,pts[a].z, pts[nb].x,pts[nb].y,pts[nb].z); }
+    }
+  }
+  var lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.Float32BufferAttribute(lp, 3));
+  root.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({color:cAcc, transparent:true, opacity:.24})));
+
+  var flat = []; pts.forEach(function(p){ flat.push(p.x, p.y, p.z); });
+  var ng = new THREE.BufferGeometry(); ng.setAttribute('position', new THREE.Float32BufferAttribute(flat, 3));
+  root.add(new THREE.Points(ng, new THREE.PointsMaterial({color:cAcc, size:.17, map:dot, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending})));
+
+  var threatIdx = [7, 41, 88], tf = [];
+  threatIdx.forEach(function(ix){ tf.push(pts[ix].x, pts[ix].y, pts[ix].z); });
+  var tg = new THREE.BufferGeometry(); tg.setAttribute('position', new THREE.Float32BufferAttribute(tf, 3));
+  var tm = new THREE.PointsMaterial({color:cRed, size:.3, map:dot, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending});
+  root.add(new THREE.Points(tg, tm));
+
+  var P = 16, pa = [], pb = [], pt = [], ps = [];
+  for (var s = 0; s < P; s++) { var st = Math.floor(Math.random() * N); pa.push(st); pb.push(adj[st][Math.floor(Math.random() * adj[st].length)]); pt.push(Math.random()); ps.push(.5 + Math.random() * .7); }
+  var pArr = new Float32Array(P * 3);
+  var pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pArr, 3));
+  root.add(new THREE.Points(pg, new THREE.PointsMaterial({color:cAmb, size:.22, map:dot, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending})));
+  function placePackets(){
+    for (var q = 0; q < P; q++) {
+      var A = pts[pa[q]], B = pts[pb[q]], t = pt[q];
+      pArr[q*3] = A.x + (B.x - A.x) * t; pArr[q*3+1] = A.y + (B.y - A.y) * t; pArr[q*3+2] = A.z + (B.z - A.z) * t;
+    }
+    pg.attributes.position.needsUpdate = true;
+  }
+  placePackets();
+
+  var core = new THREE.Group(); scene.add(core);
+  core.add(new THREE.Mesh(new THREE.IcosahedronGeometry(.95, 1), new THREE.MeshBasicMaterial({color:cAmb, wireframe:true, transparent:true, opacity:.6})));
+  core.add(new THREE.Mesh(new THREE.IcosahedronGeometry(.5, 0), new THREE.MeshBasicMaterial({color:cAcc, transparent:true, opacity:.3})));
+  var ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.1, .012, 6, 220), new THREE.MeshBasicMaterial({color:cAcc, transparent:true, opacity:.4}));
+  ring1.rotation.x = Math.PI / 2.4; scene.add(ring1);
+  var ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.4, .01, 6, 220), new THREE.MeshBasicMaterial({color:cAmb, transparent:true, opacity:.28}));
+  ring2.rotation.x = -Math.PI / 3.1; ring2.rotation.y = .5; scene.add(ring2);
+
+  var hudN = document.getElementById('hud-n'), hudP = document.getElementById('hud-p'), hudT = document.getElementById('hud-t');
+  if (hudN) hudN.textContent = N; if (hudP) hudP.textContent = P; if (hudT) hudT.textContent = threatIdx.length;
+
+  function size(){
+    var w = wrap.clientWidth, h = wrap.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    if (w / h < 1.1) camera.position.z = 8.4; else camera.position.z = 8.4 * Math.max(.8, 1.1 / (w / h) * .9);
+  }
+  size();
+  if (window.ResizeObserver) new ResizeObserver(function(){ size(); if (reduce) render(); }).observe(wrap);
+  else window.addEventListener('resize', function(){ size(); if (reduce) render(); });
+
+  var mx = 0, my = 0, px = 0, py = 0, spin = 0, running = false, onscreen = true, raf = 0, last = 0;
+  var hero = wrap.parentElement;
+  if (!reduce) hero.addEventListener('pointermove', function(e){
+    var r = hero.getBoundingClientRect();
+    mx = ((e.clientX - r.left) / r.width - .5) * 2; my = ((e.clientY - r.top) / r.height - .5) * 2;
+  });
+
+  function render(){
+    root.rotation.y = spin + px * .5; root.rotation.x = .22 + py * .3;
+    renderer.render(scene, camera);
+  }
+  function frame(now){
+    raf = 0;
+    var dt = Math.min((now - last) / 1000, .05); last = now;
+    spin += dt * .2; px += (mx - px) * .05; py += (my - py) * .05;
+    core.rotation.y -= dt * .6; core.rotation.x += dt * .3;
+    ring1.rotation.z += dt * .12; ring2.rotation.z -= dt * .09;
+    for (var q = 0; q < P; q++) {
+      pt[q] += dt * ps[q];
+      if (pt[q] >= 1) {
+        var from = pb[q], opts = adj[from], nxt = opts[Math.floor(Math.random() * opts.length)];
+        if (nxt === pb[q] || (nxt === pa[q] && opts.length > 1)) nxt = opts[(opts.indexOf(nxt) + 1) % opts.length];
+        pa[q] = from; pb[q] = nxt; pt[q] = 0;
+      }
+    }
+    placePackets();
+    tm.size = .26 + Math.sin(now * .006) * .1;
+    render();
+    if (running) raf = requestAnimationFrame(frame);
+  }
+  function start(){ if (reduce || running || !onscreen || document.hidden) return; running = true; last = performance.now(); raf = requestAnimationFrame(frame); }
+  function stop(){ running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
+  if (reduce) render();
+  else {
+    if ('IntersectionObserver' in window) new IntersectionObserver(function(en){ onscreen = en[0].isIntersecting; onscreen ? start() : stop(); }).observe(wrap);
+    document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+    start();
+  }
+})();
+</script>
+</body>
+</html>
