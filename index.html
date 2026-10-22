@@ -470,6 +470,24 @@
       </article>
 
       <article class="pcard featured" data-cat="sec">
+        <button class="thumb" type="button" data-open="detection-as-code" data-path="~/projects/detection-as-code" aria-label="Voir les détails : Detection as Code, règles Sigma testées sur de vraies attaques">
+          <img src="img/detection-as-code-pipeline.png" alt="Pipeline GitHub Actions de detection-as-code : les 5 jobs réussis, du lint Sigma aux requêtes Wazuh exécutées sur OpenSearch" loading="lazy"><span class="kind sec">Ingénierie de détection · SOC</span>
+        </button>
+        <div class="pbody">
+          <h3>Detection as Code, des règles Sigma testées sur de vraies attaques</h3>
+          <p>Vingt règles de détection Sigma pour Windows et Linux, associées à MITRE ATT&amp;CK et accompagnées chacune d'un playbook de triage. La CI rejoue des attaques réelles enregistrées (jeux de données publics OTRF et loghub) : une règle n'est fusionnée que si elle détecte son attaque et ne se déclenche sur aucun échantillon bénin. Les règles sont ensuite converties pour Wazuh et Elastic, et les requêtes Wazuh sont exécutées sur un vrai OpenSearch pour vérifier la conversion.</p>
+          <ul class="proof">
+            <li><b>20</b> règles Sigma, 25 techniques ATT&amp;CK</li>
+            <li><b>506</b> tests, 0 alerte sur 188 événements bénins</li>
+            <li><b>4</b> cibles : Wazuh, Lucene, EQL, ES|QL</li>
+            <li><b>0</b> échantillon écrit à la main</li>
+          </ul>
+          <div class="tagset"><span class="tag">Sigma</span><span class="tag">pySigma</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">Sysmon</span><span class="tag">Wazuh</span><span class="tag">OpenSearch</span><span class="tag">Elastic</span><span class="tag">Python</span><span class="tag">pytest</span><span class="tag">GitHub Actions</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="detection-as-code" data-path="~/projects/detection-as-code">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/detection-as-code" target="_blank" rel="noopener">GitHub ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/detection-as-code/actions/workflows/detections.yml" target="_blank" rel="noopener">CI ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard featured" data-cat="sec">
         <button class="thumb" type="button" data-open="hardening-auditor" data-path="~/projects/hardening-auditor" aria-label="Voir les détails : Hardening Auditor, audit de conformité CIS et ANSSI">
           <img src="img/hardening-auditor-report.png" alt="Rapport Hardening Auditor d'un serveur Windows : score de conformité 61,4 sur 100, constats par sévérité et score par catégorie" loading="lazy"><span class="kind sec">Outil d'audit · Conformité</span>
         </button>
@@ -751,6 +769,43 @@
     <li><b>Une alerte ZAP analysée</b> et documentée comme risque accepté avec ses contrôles compensatoires.</li>
   </ul>
   <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/shieldpipe" target="_blank" rel="noopener">Code source sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/shieldpipe/pull/2" target="_blank" rel="noopener">Voir la PR bloquée ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/shieldpipe/blob/main/docs/threat-model.md" target="_blank" rel="noopener">Modèle de menaces ↗</a></div>
+</template>
+
+<template id="t-detection-as-code">
+  <h3>Detection as Code, des règles Sigma testées sur de vraies attaques</h3>
+  <p>Les règles de détection d'un SOC gérées comme du code. Vingt règles Sigma pour Windows et Linux, chacune associée à une technique MITRE ATT&amp;CK et accompagnée d'un playbook de triage. Une règle n'est fusionnée que si la CI prouve qu'elle détecte une attaque réelle enregistrée et qu'elle reste muette sur tous les échantillons bénins du dépôt. Les mêmes règles sont ensuite converties pour Wazuh et Elastic.</p>
+  <div class="tagset"><span class="tag">Sigma</span><span class="tag">pySigma</span><span class="tag">MITRE ATT&amp;CK v20</span><span class="tag">Sysmon</span><span class="tag">Wazuh</span><span class="tag">OpenSearch</span><span class="tag">Elastic (Lucene, EQL, ES|QL)</span><span class="tag">OTRF Security-Datasets</span><span class="tag">Python</span><span class="tag">pytest</span><span class="tag">GitHub Actions</span><span class="tag">CodeQL</span></div>
+  <div class="run"><b>Tout est public et vérifiable</b> : à chaque push, la CI valide les règles, rejoue chaque attaque enregistrée, reconstruit les échantillons depuis les jeux de données publics et exécute les requêtes Wazuh sur un OpenSearch réel. Pipeline vert en moins de 2 minutes.</div>
+  <img src="img/detection-as-code-pipeline.png" alt="Pipeline GitHub Actions de detection-as-code : lint Sigma, tests de détection, provenance des échantillons, conversion Wazuh et Elastic, requêtes Wazuh sur OpenSearch, tous réussis">
+
+  <h4>Comment une règle est testée</h4>
+  <ul class="facts">
+    <li><b>Des échantillons extraits, jamais écrits à la main</b> : les événements d'attaque viennent des jeux de données publics OTRF Security-Datasets (Empire et Atomic Red Team sur un domaine de lab) et d'un vrai serveur SSH exposé à Internet (loghub). Chaque source est épinglée par commit et SHA-256, et la CI les ré-extrait à chaque push.</li>
+    <li><b>Attaque détectée, bénin ignoré</b> : chaque règle doit trouver tous les événements de son attaque, puis rester muette sur les 21 fichiers bénins du dépôt (188 événements réels), pas seulement le sien.</li>
+    <li><b>Le moteur de Zircolite</b> : les règles sont compilées avec le backend SQLite de pySigma et les mêmes pipelines de source de journal qu'un SIEM. Les règles de corrélation (force brute SSH, pulvérisation de mots de passe) s'exécutent nativement.</li>
+    <li><b>Validateurs pySigma bloquants</b> : une règle invalide, un tag ATT&amp;CK inexistant ou une combinaison de modificateurs dangereuse arrête la CI.</li>
+  </ul>
+  <img src="img/detection-as-code-tests.png" alt="Résultats par règle : 20 règles sur 20 réussies, chaque attaque enregistrée détectée, aucune alerte sur les 188 événements bénins">
+
+  <h4>Du Sigma au SIEM</h4>
+  <ul class="facts">
+    <li><b>Quatre conversions</b> publiées en artefacts : Wazuh (indexeur OpenSearch), Elastic Lucene, EQL et ES|QL.</li>
+    <li><b>Conversion vérifiée en conditions réelles</b> : 441 événements sont indexés dans OpenSearch 2.19, le moteur de l'indexeur Wazuh 4.x, au format des décodeurs Wazuh, puis chaque requête doit retrouver son attaque et rien d'autre.</li>
+    <li><b>Couverture générée, pas déclarée</b> : la couche ATT&amp;CK Navigator et le tableau de couverture du README sont produits à partir des tags des règles.</li>
+    <li><b>Un playbook par règle</b> : ce que l'alerte signifie, comment enquêter, les faux positifs attendus et la réponse.</li>
+  </ul>
+
+  <h4>Ce que la construction a révélé</h4>
+  <ul class="facts">
+    <li><b>ATT&amp;CK v20 a renuméroté une partie de Defense Evasion</b> : <code>sigma check</code> a rejeté 14 tags, par exemple T1070.001 devenu T1685.005 (effacement des journaux Windows).</li>
+    <li><b>Une combinaison de modificateurs qui ne pouvait jamais correspondre</b> (<code>windash</code> avec <code>all</code>), signalée par le validateur et corrigée.</li>
+    <li><b>Microsoft Defender a mis en quarantaine cinq fichiers de données</b> contenant des stagers Empire encodés : les charges utiles sont désormais tronquées, ce que documente le dépôt.</li>
+    <li><b>3 requêtes Wazuh sur 20 ratent leur attaque</b> avec le mapping sensible à la casse par défaut de Wazuh (<code>HKLM\sam</code> contre <code>hklm\sam</code>). La CI le signale à chaque exécution.</li>
+  </ul>
+
+  <h4>Lien avec mon alternance</h4>
+  <p>J'exploite Wazuh au quotidien chez Eurocom Broadcast et je prépare la certification BTL1. Ce projet applique à l'ingénierie de détection les pratiques de ShieldPipe : tout changement est testé, versionné et relu avant d'atteindre le SIEM.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/detection-as-code" target="_blank" rel="noopener">Code source sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/detection-as-code/actions/workflows/detections.yml" target="_blank" rel="noopener">Voir la CI ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/detection-as-code/tree/main/playbooks" target="_blank" rel="noopener">Playbooks ↗</a><a class="abtn" href="https://mitre-attack.github.io/attack-navigator/#layerURL=https%3A%2F%2Fraw.githubusercontent.com%2FBarkatzineddine%2Fdetection-as-code%2Fmain%2Fdocs%2Fattack-navigator-layer.json" target="_blank" rel="noopener">Couverture ATT&amp;CK ↗</a></div>
 </template>
 
 <template id="t-hardening-auditor">
