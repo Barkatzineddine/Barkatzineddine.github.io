@@ -107,7 +107,8 @@
   .hud.tl{top:12px;left:34px;} .hud.bl{bottom:12px;left:14px;} .hud.br{bottom:12px;right:34px;text-align:right;}
   .hud b{color:var(--accent);font-weight:600;} .hud .amb{color:var(--amber);} .hud .rd{color:var(--red);}
 
-  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px;}
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:28px;}
+  @media (max-width:1000px){.stats{grid-template-columns:repeat(2,minmax(0,1fr));}}
   @media (max-width:640px){.stats{grid-template-columns:1fr;}}
   @media (min-width:641px) and (max-width:1000px){.stat{flex-direction:column;align-items:flex-start;gap:2px;}}
   .stat{border:1px solid var(--line);background:var(--panel);padding:12px 16px;display:flex;align-items:baseline;gap:12px;min-width:0;}
@@ -351,6 +352,7 @@
     <div class="stat"><span class="big">Top 4%</span><span class="txt">TryHackMe, 67 rooms terminées</span></div>
     <div class="stat"><span class="big">BTL1</span><span class="txt">Blue Team Labs Online, certification préparée</span></div>
     <div class="stat"><span class="big">HTB</span><span class="txt">Parcours Junior Penetration Tester</span></div>
+    <div class="stat"><span class="big">ISO 27001</span><span class="txt">Foundation, certification obtenue</span></div>
   </div>
 
   <!-- ===================== PARCOURS ===================== -->
