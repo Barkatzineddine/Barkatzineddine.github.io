@@ -194,7 +194,7 @@
   .pcard.featured{grid-column:1 / -1;flex-direction:row;border-color:var(--accent-dim);}
   .pcard.featured .thumb{flex:0 0 56%;aspect-ratio:auto;min-height:320px;border-bottom:none;border-right:1px solid var(--line);}
   .pcard.featured .thumb img{position:absolute;inset:0;object-position:left top;}
-  .pcard.featured .pbody h3{font-size:24px;}
+  .pcard.featured .pbody h3{font-size:30px;}
   .pcard.featured .pbody{padding:24px 26px;}
   .pcard.featured .kind{color:var(--accent);background:color-mix(in srgb, var(--accent) 14%, var(--bg));}
   .proof{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;}
@@ -210,7 +210,8 @@
   .dlg-body ul.facts b{color:var(--ink-strong);}
   .dlg-body code{font-family:var(--mono);color:var(--ink);}
   .pbody{padding:20px 22px 22px;display:flex;flex-direction:column;gap:14px;flex:1;min-width:0;}
-  .pbody h3{font-family:var(--sans);font-size:20px;font-weight:700;line-height:1.3;letter-spacing:-.01em;color:var(--ink-strong);}
+  .pbody h3{position:relative;font-family:var(--sans);font-size:24px;font-weight:800;line-height:1.25;letter-spacing:-.015em;color:var(--ink-strong);}
+  .pbody h3::before{content:"";position:absolute;left:-12px;top:.15em;bottom:.15em;width:3px;border-radius:2px;background:var(--accent);box-shadow:0 0 10px rgba(46,230,168,.45);}
   .pbody p{margin:0;font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink-soft);}
   .actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px;padding-top:4px;}
   .abtn{font-family:var(--mono);font-size:12px;padding:7px 12px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);text-decoration:none;cursor:pointer;}
@@ -221,7 +222,7 @@
   .sub-title b{color:var(--accent);font-weight:600;} .sub-title::after{content:"";flex:1;height:1px;background:var(--line);}
   .labs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
   .lab{border:1px dashed var(--line);background:var(--panel-2);padding:14px 16px;min-width:0;}
-  .lab .cid{font-size:10.5px;color:var(--accent);} .lab h4{font-size:13.5px;font-weight:700;margin:3px 0 6px;color:var(--ink);}
+  .lab .cid{font-size:10.5px;color:var(--accent);} .lab h4{font-family:var(--sans);font-size:17px;font-weight:800;margin:4px 0 8px;color:var(--ink-strong);}
   .lab p{margin:0;font-size:12.3px;color:var(--ink-dim);}
   .more{margin-top:22px;font-size:12.5px;color:var(--ink-dim);}
 
@@ -289,7 +290,9 @@
     .pgrid{gap:16px;}
     .pcard:not(.featured) .thumb{aspect-ratio:2/1;}
     .pbody{padding:16px 16px 18px;gap:12px;}
-    .pbody h3,.pcard.featured .pbody h3{font-size:19px;}
+    .pbody h3{font-size:21px;}
+    .pcard.featured .pbody h3{font-size:24px;}
+    .pbody h3::before{left:-10px;}
     .pcard.featured .pbody{padding:16px 16px 18px;}
     .pbody > p{font-size:14.5px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;}
     .pcard.featured .pbody > p{-webkit-line-clamp:7;}
@@ -468,7 +471,7 @@
           <p>Le site d'un barbier lyonnais : prestations, galerie, horaires et contact, avec une prise de rendez-vous en quatre étapes qui tient compte des horaires, des pauses, des jours fériés et des créneaux déjà pris. Le gérant gère son agenda par barbier, ses messages et ses fermetures.</p>
           <ul class="proof"><li><b>4</b> étapes pour réserver, fichier agenda inclus</li><li><b>98–100</b> aux 4 scores Lighthouse</li><li><b>0</b> script tiers, cookie ou traceur</li><li><b>3</b> protections anti-spam sans captcha</li></ul>
           <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
-          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-barbier/" target="_blank" rel="noopener">Tester la démo ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-barbier" target="_blank" rel="noopener">Code ↗</a></div>
+          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-barbier/" target="_blank" rel="noopener">Tester la démo ↗</a><button class="abtn" type="button" data-open="demo-barbier" data-path="~/projects/demo-barbier">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/demo-barbier" target="_blank" rel="noopener">Code ↗</a></div>
         </div>
       </article>
       <article class="pcard">
@@ -480,7 +483,7 @@
           <p>Une boutique complète : catalogue filtrable, fiches produits avec choix de l'émail, panier, commande en trois étapes et paiement en mode test, sans aucune donnée bancaire demandée. L'administration gère produits, stocks, photos et suivi des commandes.</p>
           <ul class="proof"><li><b>13</b> produits, 8 émaux, filtres partageables</li><li><b>3</b> étapes de commande, paiement simulé</li><li><b>98–100</b> aux 4 scores Lighthouse</li><li><b>0</b> numéro de carte demandé ou stocké</li></ul>
           <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
-          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener">Tester la démo ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-boutique" target="_blank" rel="noopener">Code ↗</a></div>
+          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener">Tester la démo ↗</a><button class="abtn" type="button" data-open="demo-boutique" data-path="~/projects/demo-boutique">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/demo-boutique" target="_blank" rel="noopener">Code ↗</a></div>
         </div>
       </article>
       <article class="pcard">
@@ -492,7 +495,7 @@
           <p>Un outil de gestion pour artisan : clients, devis convertis en factures, export PDF généré dans le navigateur, relances, suivi des paiements et graphiques du chiffre d'affaires. Le client accepte ses devis en ligne depuis son portail, avec une signature horodatée.</p>
           <ul class="proof"><li><b>PDF</b> générés sans bibliothèque, mentions légales</li><li><b>SHA-256</b> empreinte de chaque devis signé</li><li><b>98–100</b> aux 4 scores Lighthouse</li><li><b>2</b> thèmes, clair et sombre</li></ul>
           <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
-          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-facturation/" target="_blank" rel="noopener">Tester la démo ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-facturation" target="_blank" rel="noopener">Code ↗</a></div>
+          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-facturation/" target="_blank" rel="noopener">Tester la démo ↗</a><button class="abtn" type="button" data-open="demo-facturation" data-path="~/projects/demo-facturation">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/demo-facturation" target="_blank" rel="noopener">Code ↗</a></div>
         </div>
       </article>
     </div>
@@ -582,42 +585,6 @@
           </ul>
           <div class="tagset"><span class="tag">Python 3</span><span class="tag">asyncio</span><span class="tag">Détection de service</span><span class="tag">TLS</span><span class="tag">SSH</span><span class="tag">SMB</span><span class="tag">Redis</span><span class="tag">SQL</span><span class="tag">RDP / VNC</span><span class="tag">DNS</span><span class="tag">Docker Compose</span><span class="tag">mypy --strict</span><span class="tag">CodeQL</span></div>
           <div class="actions"><button class="abtn main" type="button" data-open="reconscope" data-path="~/projects/reconscope">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/reconscope" target="_blank" rel="noopener">GitHub ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/reconscope/actions/workflows/ci.yml" target="_blank" rel="noopener">CI ↗</a></div>
-        </div>
-      </article>
-
-      <article class="pcard" data-cat="web">
-        <button class="thumb" type="button" data-open="demo-barbier" data-path="~/projects/demo-barbier" aria-label="Voir les détails : Maison Corbin, site de barbier avec réservation">
-          <img src="img/demo-barbier.webp" alt="Accueil du site Maison Corbin : photo d'un barbier au travail et bouton Réserver un créneau" loading="lazy"><span class="kind web">Web · démo en ligne</span>
-        </button>
-        <div class="pbody">
-          <h3>Maison Corbin, site de barbier avec réservation</h3>
-          <p>Site vitrine avec prise de rendez-vous en ligne et espace gérant. Démo en ligne, sécurisée par défaut, 98 à 100 sur Lighthouse.</p>
-          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span></div>
-          <div class="actions"><button class="abtn main" type="button" data-open="demo-barbier" data-path="~/projects/demo-barbier">Détails</button><a class="abtn" href="https://barkatzineddine.github.io/demo-barbier/" target="_blank" rel="noopener">Tester ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-barbier" target="_blank" rel="noopener">GitHub ↗</a></div>
-        </div>
-      </article>
-
-      <article class="pcard" data-cat="web">
-        <button class="thumb" type="button" data-open="demo-boutique" data-path="~/projects/demo-boutique" aria-label="Voir les détails : Kaolin et Cendre, boutique de céramiques">
-          <img src="img/demo-boutique.webp" alt="Accueil de la boutique Kaolin et Cendre : titre, boutons et étagère de céramiques illustrées" loading="lazy"><span class="kind web">Web · démo en ligne</span>
-        </button>
-        <div class="pbody">
-          <h3>Kaolin &amp; Cendre, boutique de céramiques</h3>
-          <p>Boutique en ligne : catalogue filtrable, panier, commande avec paiement en mode test et administration. Démo en ligne.</p>
-          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">SVG</span></div>
-          <div class="actions"><button class="abtn main" type="button" data-open="demo-boutique" data-path="~/projects/demo-boutique">Détails</button><a class="abtn" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener">Tester ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-boutique" target="_blank" rel="noopener">GitHub ↗</a></div>
-        </div>
-      </article>
-
-      <article class="pcard" data-cat="web">
-        <button class="thumb" type="button" data-open="demo-facturation" data-path="~/projects/demo-facturation" aria-label="Voir les détails : Morel Agencement, devis, factures et portail client">
-          <img src="img/demo-facturation.webp" alt="Tableau de bord de Morel Agencement : chiffre d'affaires encaissé, graphique mensuel et meilleurs clients" loading="lazy"><span class="kind web">Web · démo en ligne</span>
-        </button>
-        <div class="pbody">
-          <h3>Morel Agencement, devis, factures et portail client</h3>
-          <p>Outil de gestion pour artisan : devis, factures, PDF générés dans le navigateur, portail client et graphiques. Démo en ligne.</p>
-          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">PDF</span></div>
-          <div class="actions"><button class="abtn main" type="button" data-open="demo-facturation" data-path="~/projects/demo-facturation">Détails</button><a class="abtn" href="https://barkatzineddine.github.io/demo-facturation/" target="_blank" rel="noopener">Tester ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-facturation" target="_blank" rel="noopener">GitHub ↗</a></div>
         </div>
       </article>
 
