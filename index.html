@@ -487,6 +487,24 @@
         </div>
       </article>
 
+      <article class="pcard featured" data-cat="sec">
+        <button class="thumb" type="button" data-open="reconscope" data-path="~/projects/reconscope" aria-label="Voir les détails : reconscope, énumération réseau et services sous périmètre autorisé">
+          <img src="img/reconscope-report.png" alt="Rapport HTML de reconscope en thème sombre : note d'autorisation, constats par sévérité, et détail des ports HTTP et HTTPS avec l'analyse du certificat TLS" loading="lazy"><span class="kind sec">Outil d'énumération · Offensif cadré</span>
+        </button>
+        <div class="pbody">
+          <h3>reconscope, énumération réseau et services sous périmètre autorisé</h3>
+          <p>Un outil d'énumération réseau en Python pour les tests de sécurité autorisés. Sa pièce maîtresse est le fichier de périmètre : une liste blanche d'hôtes et de ports que reconscope ne dépasse jamais et qui refuse toute cible hors scope avant d'envoyer le moindre paquet. Un scan TCP asynchrone et limité en débit découvre les services, puis des sondes en lecture seule relèvent les points d'hygiène : versions et certificats TLS, en-têtes de sécurité HTTP, algorithmes SSH faibles, SMBv1 et signature SMB, enregistrements DNS. Rapport JSON et rapport HTML autonome durci par CSP.</p>
+          <ul class="proof">
+            <li><b>5</b> sondes de protocole en lecture seule</li>
+            <li><b>84</b> tests, 93 % de couverture</li>
+            <li><b>0</b> paquet hors du périmètre autorisé</li>
+            <li><b>lab Docker</b> scanné à chaque commit</li>
+          </ul>
+          <div class="tagset"><span class="tag">Python 3</span><span class="tag">asyncio</span><span class="tag">TLS</span><span class="tag">SSH</span><span class="tag">SMB</span><span class="tag">DNS</span><span class="tag">cryptography</span><span class="tag">Jinja2</span><span class="tag">Docker Compose</span><span class="tag">mypy --strict</span><span class="tag">GitHub Actions</span><span class="tag">CodeQL</span><span class="tag">Gitleaks</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="reconscope" data-path="~/projects/reconscope">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/reconscope" target="_blank" rel="noopener">GitHub ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/reconscope/actions/workflows/ci.yml" target="_blank" rel="noopener">CI ↗</a></div>
+        </div>
+      </article>
+
       <article class="pcard" data-cat="sec">
         <button class="thumb" type="button" data-open="phishing" data-path="~/projects/phishing-agent" aria-label="Voir les détails : agent de triage de phishing">
           <img src="img/phishing-agent.png" alt="Sortie du script d'extraction d'un email de phishing" loading="lazy"><span class="kind sec">Sécurité</span>
@@ -775,6 +793,45 @@
   <h4>Utilisation en entreprise</h4>
   <p>L'outil est destiné aux serveurs d'Eurocom Broadcast dans le cadre de mon alternance, après accord du responsable de chaque système. Il ne corrige rien lui-même : il fournit les constats et les commandes de remédiation, appliquées ensuite après validation.</p>
   <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/hardening-auditor" target="_blank" rel="noopener">Code source sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/hardening-auditor/actions/workflows/ci.yml" target="_blank" rel="noopener">Voir la CI ↗</a></div>
+</template>
+
+<template id="t-reconscope">
+  <h3>reconscope, énumération réseau et services sous périmètre autorisé</h3>
+  <p>Un outil pour la phase de reconnaissance d'un test d'intrusion autorisé : cartographier les hôtes et les services d'un périmètre, identifier ce qui écoute et remonter les défauts d'hygiène qu'un défenseur veut voir corrigés. Tout part d'un fichier de périmètre, qui est à la fois l'autorisation et le garde-fou : reconscope ne contacte que ce qu'il déclare et refuse le reste avant d'émettre le moindre paquet.</p>
+  <div class="tagset"><span class="tag">Python 3</span><span class="tag">asyncio</span><span class="tag">TLS / ssl</span><span class="tag">SSH (KEXINIT)</span><span class="tag">SMB2 / SMB1</span><span class="tag">dnspython</span><span class="tag">cryptography</span><span class="tag">Jinja2 + CSP</span><span class="tag">pytest</span><span class="tag">ruff</span><span class="tag">mypy --strict</span><span class="tag">Docker Compose</span><span class="tag">GitHub Actions</span><span class="tag">CodeQL</span><span class="tag">Gitleaks</span><span class="tag">OpenSSF Scorecard</span></div>
+  <div class="run"><b>Usage autorisé uniquement.</b> Le fichier de périmètre est une frontière de sécurité, pas un substitut à l'autorisation écrite de l'engagement. À chaque commit, la CI monte un lab Docker (nginx, OpenSSH, Samba, CoreDNS) aux défauts volontaires et vérifie que reconscope retrouve chacun d'eux.</div>
+  <div class="shots2">
+    <figure><img src="img/reconscope-report.png" alt="Rapport HTML en thème sombre : note d'autorisation, constats par sévérité, enregistrements DNS, et détail des ports 80 et 443 avec l'analyse du certificat TLS (auto-signé, expiration proche)"><figcaption>Rapport HTML autonome, thème sombre selon le réglage du système</figcaption></figure>
+  </div>
+
+  <h4>Le périmètre comme garde-fou</h4>
+  <ul class="facts">
+    <li><b>Fermé par défaut</b> : une liste <code>allow</code> d'hôtes et de ports (plus une liste <code>deny</code> prioritaire). Un fichier sans note d'<code>authorization</code> est refusé : l'outil ne démarre pas.</li>
+    <li><b>Double vérification</b> : la cible est autorisée sur le nom ou l'adresse donnés, puis à nouveau sur chaque adresse résolue. Une réponse DNS détournée ne peut pas faire entrer un hôte non listé dans le périmètre.</li>
+    <li><b>Scan TCP connect asynchrone</b>, bridé par un limiteur combiné (connexions simultanées et nouvelles connexions par seconde) pour rester discret et doux pour le réseau.</li>
+    <li>Chaque refus est inscrit dans le rapport, pour tracer ce qui a été exclu et pourquoi.</li>
+  </ul>
+
+  <h4>Cinq sondes en lecture seule</h4>
+  <ul class="facts">
+    <li><b>HTTP(S)</b> : statut, titre, en-tête <code>Server</code> et en-têtes de sécurité manquants (HSTS, CSP, X-Content-Type-Options…).</li>
+    <li><b>TLS</b> : sujet, émetteur, SAN, expiration, taille de clé et signature du certificat, et versions acceptées — signale TLS 1.0/1.1, l'auto-signé, l'expiré et les clés faibles.</li>
+    <li><b>SSH</b> : bannière et algorithmes offerts (échange de clés, clé d'hôte, chiffrement, MAC), les obsolètes étant signalés (KEX SHA-1, chiffrements CBC, <code>ssh-rsa</code>…). La sonde lit le <code>KEXINIT</code> directement sur la socket.</li>
+    <li><b>SMB</b> : dialecte négocié, signature exigée ou non, et détection du protocole obsolète SMBv1 — sans authentification ni accès à un partage.</li>
+    <li><b>DNS</b> : enregistrements directs pour un nom, PTR inverse pour une adresse.</li>
+  </ul>
+
+  <h4>Rapport durci et chaîne de qualité</h4>
+  <ul class="facts">
+    <li><b>Rapport HTML autonome</b> : toutes les valeurs collectées sont échappées et une CSP interdit scripts et ressources distantes ; l'unique feuille de style est autorisée par son empreinte SHA-256. Une bannière ou un champ de certificat hostile ne peut pas injecter de balise.</li>
+    <li><b>84 tests</b> (93 % de couverture) contre de vrais serveurs TCP/TLS locaux, ruff et <code>mypy --strict</code>.</li>
+    <li><b>Lab d'intégration</b> : la CI scanne le lab Docker et échoue si une sonde ne retrouve plus un défaut planté.</li>
+    <li><b>Chaîne d'approvisionnement verrouillée</b> : actions épinglées par SHA, dépendances verrouillées par hash et adoptées après un délai de 7 jours, CodeQL, Gitleaks et OpenSSF Scorecard.</li>
+  </ul>
+
+  <h4>Usage</h4>
+  <p>Destiné aux entraînements sur plateformes légales (TryHackMe, Hack The Box) et aux engagements autorisés. Le périmètre reflète l'accord écrit ; l'outil n'exploite rien et ne modifie rien : il identifie les services et remonte les défauts d'hygiène, à corriger ensuite après validation.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/reconscope" target="_blank" rel="noopener">Code source sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/reconscope/actions/workflows/ci.yml" target="_blank" rel="noopener">Voir la CI ↗</a></div>
 </template>
 
 <template id="t-phishing">
