@@ -184,7 +184,7 @@
   .morebar .chip{padding:9px 18px;font-size:12px;}
   .pcard.featured{grid-column:1 / -1;flex-direction:row;border-color:var(--accent-dim);}
   .pcard.featured .thumb{flex:0 0 56%;aspect-ratio:auto;min-height:320px;border-bottom:none;border-right:1px solid var(--line);}
-  .pcard.featured .thumb img{object-position:left top;}
+  .pcard.featured .thumb img{position:absolute;inset:0;object-position:left top;}
   .pcard.featured .pbody h3{font-size:18px;}
   .pcard.featured .kind{color:var(--accent);background:color-mix(in srgb, var(--accent) 14%, var(--bg));}
   .proof{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;}
@@ -198,6 +198,7 @@
   .dlg-body h4{font-size:13.5px;color:var(--accent);margin:8px 0 0;}
   .dlg-body ul.facts{margin:0;padding-left:18px;font-size:12.8px;color:var(--ink-dim);display:flex;flex-direction:column;gap:6px;}
   .dlg-body ul.facts b{color:var(--ink);}
+  .dlg-body code{font-family:var(--mono);color:var(--ink);}
   .pbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0;}
   .pbody h3{font-size:15px;font-weight:700;color:var(--ink);}
   .pbody p{margin:0;font-size:12.6px;color:var(--ink-dim);}
@@ -431,6 +432,24 @@
           </ul>
           <div class="tagset"><span class="tag">GitHub Actions</span><span class="tag">Semgrep</span><span class="tag">CodeQL</span><span class="tag">Trivy</span><span class="tag">OWASP ZAP</span><span class="tag">OPA / Rego</span><span class="tag">Kubernetes</span><span class="tag">Cilium</span><span class="tag">Sigstore</span><span class="tag">FastAPI</span></div>
           <div class="actions"><button class="abtn main" type="button" data-open="shieldpipe" data-path="~/projects/shieldpipe">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/shieldpipe" target="_blank" rel="noopener">GitHub ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/shieldpipe/pull/1" target="_blank" rel="noopener">PR bloquée ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard featured" data-cat="sec">
+        <button class="thumb" type="button" data-open="hardening-auditor" data-path="~/projects/hardening-auditor" aria-label="Voir les détails : Hardening Auditor, audit de conformité CIS et ANSSI">
+          <img src="img/hardening-auditor-report.png" alt="Rapport Hardening Auditor d'un serveur Windows : score de conformité 61,4 sur 100, constats par sévérité et score par catégorie" loading="lazy"><span class="kind sec">Outil d'audit · Conformité</span>
+        </button>
+        <div class="pbody">
+          <h3>Hardening Auditor, audit de conformité CIS et ANSSI</h3>
+          <p>Un outil d'audit en lecture seule pour serveurs Windows et Linux, fondé sur les CIS Benchmarks et le guide d'hygiène de l'ANSSI. Un collecteur sans dépendance (PowerShell 5.1 ou sh POSIX) relève la configuration dans un fichier JSON sans rien modifier, puis un moteur Python l'évalue : score par catégorie, contrôles en échec avec leur remédiation, rapport HTML hors ligne et exports pour le SIEM. Conçu pour mon alternance chez Eurocom Broadcast.</p>
+          <ul class="proof">
+            <li><b>70</b> contrôles YAML (35 Windows, 35 Linux)</li>
+            <li><b>6</b> systèmes réels audités à chaque commit</li>
+            <li><b>148</b> tests, 99 % de couverture</li>
+            <li><b>0</b> dépendance sur le serveur audité</li>
+          </ul>
+          <div class="tagset"><span class="tag">PowerShell 5.1</span><span class="tag">sh POSIX</span><span class="tag">Python</span><span class="tag">YAML</span><span class="tag">CIS Benchmarks</span><span class="tag">ANSSI</span><span class="tag">Wazuh</span><span class="tag">GitHub Actions</span><span class="tag">CodeQL</span><span class="tag">ShellCheck</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="hardening-auditor" data-path="~/projects/hardening-auditor">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/hardening-auditor" target="_blank" rel="noopener">GitHub ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/hardening-auditor/actions/workflows/ci.yml" target="_blank" rel="noopener">CI ↗</a></div>
         </div>
       </article>
 
@@ -680,6 +699,48 @@
     <li><b>Une alerte ZAP analysée</b> et documentée comme risque accepté avec ses contrôles compensatoires.</li>
   </ul>
   <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/shieldpipe" target="_blank" rel="noopener">Code source sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/shieldpipe/pull/1" target="_blank" rel="noopener">Voir la PR bloquée ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/shieldpipe/blob/main/docs/threat-model.md" target="_blank" rel="noopener">Modèle de menaces ↗</a></div>
+</template>
+
+<template id="t-hardening-auditor">
+  <h3>Hardening Auditor, audit de conformité CIS et ANSSI</h3>
+  <p>Un outil de travail d'administrateur systèmes et sécurité : auditer un serveur avant sa mise en production, mesurer l'avancement d'une campagne de durcissement et garder la trace des risques acceptés. L'audit se fait en deux temps. Sur le serveur, un collecteur en lecture seule, sans Python ni accès réseau, écrit un seul fichier JSON. Sur le poste de l'analyste, un moteur Python évalue ce fichier avec 70 contrôles qui citent chacun les recommandations CIS et les mesures ANSSI correspondantes.</p>
+  <div class="tagset"><span class="tag">Windows PowerShell 5.1</span><span class="tag">sh POSIX (dash, bash)</span><span class="tag">Python 3</span><span class="tag">YAML</span><span class="tag">CIS Benchmarks</span><span class="tag">Guide d'hygiène ANSSI</span><span class="tag">NDJSON / Wazuh</span><span class="tag">pytest</span><span class="tag">mypy --strict</span><span class="tag">ShellCheck</span><span class="tag">PSScriptAnalyzer</span><span class="tag">CodeQL</span><span class="tag">Gitleaks</span></div>
+  <div class="run"><b>Tout est public et vérifiable</b> : à chaque commit, la CI exécute les vrais collecteurs sur Windows Server 2022 et 2025, Ubuntu 22.04 et 24.04, et dans des conteneurs Debian 12 et Rocky Linux 9. Les rapports des quatre runners sont joints à chaque exécution.</div>
+  <div class="shots2">
+    <figure><img src="img/hardening-auditor-report.png" alt="Rapport HTML en thème sombre : score 61,4 sur 100, constats par sévérité, score par catégorie et détail d'un contrôle NTLMv2 en échec"><figcaption>Rapport HTML, thème sombre</figcaption></figure>
+    <figure><img src="img/hardening-auditor-report-light.png" alt="Le même rapport en thème clair, avec la remédiation par GPO et PowerShell et les références CIS et ANSSI"><figcaption>Thème clair, selon le réglage du système</figcaption></figure>
+  </div>
+
+  <h4>Du collecteur au rapport</h4>
+  <ul class="facts">
+    <li><b>Collecteurs sans dépendance</b> : PowerShell 5.1 sur Windows, sh POSIX sur Linux. Ils lisent la configuration sans rien modifier et produisent un JSON.</li>
+    <li><b>70 contrôles écrits en YAML</b> (35 Windows, 35 Linux), avec leur remédiation (GPO, commande) et leur impact. Un fait non collecté donne «&nbsp;inconnu&nbsp;», jamais un faux «&nbsp;conforme&nbsp;».</li>
+    <li><b>Score pondéré par sévérité</b>, global et par catégorie : comptes, journalisation, SSH, pare-feu, noyau, services…</li>
+    <li><b>Rapport HTML hors ligne</b> en un seul fichier, sans ressource externe, avec une CSP qui n'autorise que les styles et scripts identifiés par leur empreinte.</li>
+    <li><b>Exports JSON, NDJSON et CSV</b> : une ligne par contrôle pour le SIEM (Wazuh) ou un tableur.</li>
+    <li><b>Commande <code>compare</code></b> : ce qui a été corrigé et ce qui a régressé entre deux audits.</li>
+    <li><b>Exceptions documentées</b> : chaque risque accepté porte une justification, un approbateur et une date d'expiration. Une fois la date passée, le contrôle repasse en échec.</li>
+  </ul>
+
+  <h4>Une chaîne de qualité et de sécurité stricte</h4>
+  <ul class="facts">
+    <li><b>148 tests</b> (99 % de couverture), ruff et mypy en mode strict pour le moteur.</li>
+    <li><b>ShellCheck</b> pour le collecteur Linux, <b>PSScriptAnalyzer</b> avec la syntaxe PowerShell 5.1 pour le collecteur Windows.</li>
+    <li><b>CodeQL, Gitleaks et OpenSSF Scorecard</b> à chaque push sur main.</li>
+    <li><b>Chaîne d'approvisionnement verrouillée</b> : actions épinglées par SHA, dépendances verrouillées par hash et adoptées après un délai de 7 jours.</li>
+  </ul>
+
+  <h4>Ce que la CI a révélé pendant la construction</h4>
+  <ul class="facts">
+    <li><b>Un seuil de contrôle contourné en silence</b> : la sortie de l'audit passait par <code>| tee</code> sous <code>bash -e</code> sans <code>pipefail</code>. Le seuil <code>--max-unknown</code> échouait sur Ubuntu 24.04, mais le job restait vert.</li>
+    <li><b>sshd activé par socket sur Ubuntu 24.04</b> : <code>sshd -T</code> échoue tant que <code>/run/sshd</code> n'existe pas. Le collecteur lit désormais <code>sshd_config</code> en repli.</li>
+    <li><b>Des messages d'erreur OpenSSH terminés par un retour chariot</b> (CR) cassaient le JSON : le collecteur retire maintenant tous les caractères de contrôle.</li>
+    <li><b>Scorecard a signalé une vulnérabilité de certifi</b> (PYSEC-2026-4320) : le correctif a été adopté avant la fin du délai de 7 jours.</li>
+  </ul>
+
+  <h4>Utilisation en entreprise</h4>
+  <p>L'outil est destiné aux serveurs d'Eurocom Broadcast dans le cadre de mon alternance, après accord du responsable de chaque système. Il ne corrige rien lui-même : il fournit les constats et les commandes de remédiation, appliquées ensuite après validation.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/hardening-auditor" target="_blank" rel="noopener">Code source sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/hardening-auditor/actions/workflows/ci.yml" target="_blank" rel="noopener">Voir la CI ↗</a></div>
 </template>
 
 <template id="t-phishing">
