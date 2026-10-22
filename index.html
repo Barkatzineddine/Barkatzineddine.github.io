@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23090d11'/%3E%3Cpath d='M16 4l10 4v8c0 6-4 10-10 12C10 26 6 22 6 16V8z' fill='none' stroke='%232ee6a8' stroke-width='2'/%3E%3Cpath d='M11 16l4 4 7-8' fill='none' stroke='%232ee6a8' stroke-width='2'/%3E%3C/svg%3E">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap">
 <style>
   /* layout concept: one terminal session split into four colour-coded zones,
      parcours (amber), projets (green), compétences (blue), contact (green)
@@ -24,6 +24,8 @@
     --accent:#2ee6a8; --accent-dim:#1c8f69;
     --amber:#ffb454; --blue:#6cb2ff; --red:#ff5c5c;
     --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; /* reading text: titles and descriptions */
+    --ink-soft:#a9bfba; --ink-strong:#f2fbf8;
     color-scheme: dark;
   }
   *{box-sizing:border-box;}
@@ -123,7 +125,7 @@
   .zone-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
   .zone-title .n{color:var(--sec);font-size:12px;}
   .zone-title h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.01em;}
-  .zone-sub{color:var(--ink-dim);font-size:12.5px;max-width:48ch;margin:0;}
+  .zone-sub{color:var(--ink-soft);font-family:var(--sans);font-size:14.5px;line-height:1.6;max-width:56ch;margin:0;}
 
   /* terminal card */
   .term{border:1px solid var(--line);background:var(--panel);min-width:0;}
@@ -135,7 +137,7 @@
   .term-body > h3{font-size:12px;color:var(--sec);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;font-weight:700;}
 
   .tagset{display:flex;flex-wrap:wrap;gap:6px;}
-  .tag{font-size:10.5px;color:var(--ink);border:1px solid var(--line-soft);background:var(--panel-2);padding:3px 7px;}
+  .tag{font-size:11px;color:var(--ink);border:1px solid var(--line-soft);background:var(--panel-2);padding:3px 7px;}
   .tag::before{content:"[";color:var(--accent-dim);} .tag::after{content:"]";color:var(--accent-dim);}
 
   /* ---- parcours ---- */
@@ -149,10 +151,10 @@
   .badge{font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;border:1px solid currentColor;}
   .badge.alt{color:var(--amber);} .badge.stage{color:var(--blue);} .badge.free{color:var(--ink-dim);}
   .log-date{font-size:10.5px;color:var(--ink-dim);}
-  .log h3{font-size:14.5px;font-weight:700;color:var(--ink);}
+  .log h3{font-family:var(--sans);font-size:16.5px;font-weight:700;line-height:1.35;color:var(--ink-strong);}
   .log-org{color:var(--amber);font-size:12px;margin-bottom:6px;}
   .log ul{margin:0;padding-left:16px;}
-  .log li{margin-bottom:4px;font-size:12.8px;}
+  .log li{margin-bottom:5px;font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--ink-soft);}
   .log li::marker{color:var(--amber);content:"▸ ";}
   .edu-row{padding:10px 0;border-bottom:1px dashed var(--line);}
   .edu-row:first-of-type{padding-top:0;} .edu-row:last-child{border-bottom:none;padding-bottom:0;}
@@ -177,11 +179,11 @@
   .pcard::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .2s;
     background:radial-gradient(circle at var(--gx,50%) var(--gy,0%), color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%);}
   .pcard:hover::after{opacity:1;}
-  .thumb{display:block;position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border:none;border-bottom:1px solid var(--line);background:#000;padding:0;cursor:pointer;}
+  .thumb{display:block;position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:none;border-bottom:1px solid var(--line);background:#000;padding:0;cursor:pointer;}
   .thumb img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block;transition:transform .35s ease;}
   .pcard:hover .thumb img{transform:scale(1.04);}
   .thumb:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
-  .kind{position:absolute;top:10px;left:10px;font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;background:var(--bg);border:1px solid currentColor;}
+  .kind{position:absolute;top:10px;left:10px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:4px 9px;background:var(--bg);border:1px solid currentColor;box-shadow:0 2px 10px rgba(0,0,0,.45);}
   .kind.sec{color:var(--red);} .kind.web{color:var(--accent);} .kind.soft{color:var(--blue);}
   .morebar{display:flex;justify-content:center;margin-top:22px;}
   .morebar .chip{padding:9px 18px;font-size:12px;}
@@ -191,25 +193,26 @@
   .pcard.featured{grid-column:1 / -1;flex-direction:row;border-color:var(--accent-dim);}
   .pcard.featured .thumb{flex:0 0 56%;aspect-ratio:auto;min-height:320px;border-bottom:none;border-right:1px solid var(--line);}
   .pcard.featured .thumb img{position:absolute;inset:0;object-position:left top;}
-  .pcard.featured .pbody h3{font-size:18px;}
+  .pcard.featured .pbody h3{font-size:24px;}
+  .pcard.featured .pbody{padding:24px 26px;}
   .pcard.featured .kind{color:var(--accent);background:color-mix(in srgb, var(--accent) 14%, var(--bg));}
   .proof{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;}
-  .proof li{font-size:11.8px;color:var(--ink-dim);border-left:2px solid var(--accent-dim);padding-left:8px;}
-  .proof b{color:var(--accent);font-size:14px;}
+  .proof li{font-family:var(--sans);font-size:13.5px;line-height:1.45;color:var(--ink-soft);border-left:2px solid var(--accent-dim);padding-left:10px;}
+  .proof b{color:var(--accent);font-family:var(--mono);font-size:15px;}
   @media (max-width:900px){
     .pcard.featured{flex-direction:column;}
     .pcard.featured .thumb{flex:none;aspect-ratio:16/9;min-height:0;border-right:none;border-bottom:1px solid var(--line);}
   }
   @media (max-width:480px){.proof{grid-template-columns:1fr;}}
-  .dlg-body h4{font-size:13.5px;color:var(--accent);margin:8px 0 0;}
-  .dlg-body ul.facts{margin:0;padding-left:18px;font-size:12.8px;color:var(--ink-dim);display:flex;flex-direction:column;gap:6px;}
-  .dlg-body ul.facts b{color:var(--ink);}
+  .dlg-body h4{font-size:14px;color:var(--accent);margin:10px 0 0;}
+  .dlg-body ul.facts{margin:0;padding-left:20px;font-family:var(--sans);font-size:15px;line-height:1.6;color:var(--ink-soft);display:flex;flex-direction:column;gap:8px;max-width:80ch;}
+  .dlg-body ul.facts b{color:var(--ink-strong);}
   .dlg-body code{font-family:var(--mono);color:var(--ink);}
-  .pbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0;}
-  .pbody h3{font-size:15px;font-weight:700;color:var(--ink);}
-  .pbody p{margin:0;font-size:12.6px;color:var(--ink-dim);}
+  .pbody{padding:20px 22px 22px;display:flex;flex-direction:column;gap:14px;flex:1;min-width:0;}
+  .pbody h3{font-family:var(--sans);font-size:20px;font-weight:700;line-height:1.3;letter-spacing:-.01em;color:var(--ink-strong);}
+  .pbody p{margin:0;font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink-soft);}
   .actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px;padding-top:4px;}
-  .abtn{font-family:var(--mono);font-size:11.5px;padding:6px 11px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);text-decoration:none;cursor:pointer;}
+  .abtn{font-family:var(--mono);font-size:12px;padding:7px 12px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);text-decoration:none;cursor:pointer;}
   .abtn.main{border-color:var(--accent);color:var(--accent);}
   .abtn:hover{background:var(--accent);color:#04100b;border-color:var(--accent);}
   .abtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
@@ -253,15 +256,15 @@
   .dlg-close{font-family:var(--mono);font-size:11px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:4px 10px;cursor:pointer;}
   .dlg-close:hover{border-color:var(--red);color:var(--red);}
   .dlg-close:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-  .dlg-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:14px;}
-  .dlg-body h3{font-size:18px;font-weight:800;}
-  .dlg-body p{margin:0;font-size:13px;color:var(--ink-dim);}
-  .run{font-size:12px;color:var(--ink-dim);border-left:2px solid var(--accent-dim);padding-left:10px;}
+  .dlg-body{padding:24px 26px 28px;display:flex;flex-direction:column;gap:16px;}
+  .dlg-body h3{font-family:var(--sans);font-size:26px;font-weight:700;line-height:1.25;letter-spacing:-.015em;color:var(--ink-strong);}
+  .dlg-body p{margin:0;font-family:var(--sans);font-size:15.5px;line-height:1.7;color:var(--ink-soft);max-width:75ch;}
+  .run{font-family:var(--sans);font-size:14px;line-height:1.6;color:var(--ink-soft);border-left:2px solid var(--accent-dim);padding-left:12px;}
   .run b{color:var(--accent);font-weight:600;}
   .dlg-body img{display:block;max-width:100%;height:auto;border:1px solid var(--line);}
   .shots2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
   @media (max-width:560px){.shots2{grid-template-columns:1fr;}}
-  .shots2 figcaption,.wide-cap{font-size:10.5px;color:var(--ink-dim);padding-top:5px;}
+  .shots2 figcaption,.wide-cap{font-size:12px;color:var(--ink-dim);padding-top:6px;}
   .shots2 figure{margin:0;min-width:0;}
   .wide{overflow-x:auto;border:1px solid var(--line);background:#1c1b2b;}
   .wide img{min-width:900px;width:100%;border:none;}
@@ -271,7 +274,7 @@
   @media (max-width:560px){
     .nav{padding:6px;}
     .nav .links{flex:1;justify-content:space-between;gap:2px;}
-    .nav .links a{padding:7px 8px;font-size:11.5px;}
+    .nav .links a{padding:7px 5px;font-size:11.5px;}
     .nav .pfx{display:none;}
     .hero{padding-block:24px 4px;gap:22px;}
     .cta{display:grid;grid-template-columns:1fr 1fr;}
@@ -284,13 +287,18 @@
     .zone-head{margin-bottom:18px;}
     .pgrid{gap:16px;}
     .pcard:not(.featured) .thumb{aspect-ratio:2/1;}
-    .pbody > p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden;}
-    .pcard.featured .pbody > p{-webkit-line-clamp:6;}
+    .pbody{padding:16px 16px 18px;gap:12px;}
+    .pbody h3,.pcard.featured .pbody h3{font-size:19px;}
+    .pcard.featured .pbody{padding:16px 16px 18px;}
+    .pbody > p{font-size:14.5px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;}
+    .pcard.featured .pbody > p{-webkit-line-clamp:7;}
+    .dlg-body h3{font-size:22px;}
+    .dlg-body p,.dlg-body ul.facts{font-size:15px;}
     .term-body{padding:14px;}
     dialog{width:100vw;height:100dvh;max-height:none;margin:0;border:none;}
-    .dlg-body{padding:16px 16px 28px;}
+    .dlg-body{padding:18px 16px 32px;}
   }
-  @media (max-width:360px){.nav .links a{padding:7px 5px;font-size:11px;}}
+  @media (max-width:360px){.nav .links a{padding:7px 3px;font-size:10.5px;}}
   @media (pointer:coarse){
     .chip,.abtn,.btn-primary,.btn-ghost,.dlg-close{min-height:40px;display:inline-flex;align-items:center;justify-content:center;}
     .btn{min-height:32px;padding:4px 12px;}
@@ -572,6 +580,42 @@
           </ul>
           <div class="tagset"><span class="tag">Python 3</span><span class="tag">asyncio</span><span class="tag">Détection de service</span><span class="tag">TLS</span><span class="tag">SSH</span><span class="tag">SMB</span><span class="tag">Redis</span><span class="tag">SQL</span><span class="tag">RDP / VNC</span><span class="tag">DNS</span><span class="tag">Docker Compose</span><span class="tag">mypy --strict</span><span class="tag">CodeQL</span></div>
           <div class="actions"><button class="abtn main" type="button" data-open="reconscope" data-path="~/projects/reconscope">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/reconscope" target="_blank" rel="noopener">GitHub ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/reconscope/actions/workflows/ci.yml" target="_blank" rel="noopener">CI ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web">
+        <button class="thumb" type="button" data-open="demo-barbier" data-path="~/projects/demo-barbier" aria-label="Voir les détails : Maison Corbin, site de barbier avec réservation">
+          <img src="img/demo-barbier.webp" alt="Accueil du site Maison Corbin : photo d'un barbier au travail et bouton Réserver un créneau" loading="lazy"><span class="kind web">Web · démo en ligne</span>
+        </button>
+        <div class="pbody">
+          <h3>Maison Corbin, site de barbier avec réservation</h3>
+          <p>Site vitrine avec prise de rendez-vous en ligne et espace gérant. Démo en ligne, sécurisée par défaut, 98 à 100 sur Lighthouse.</p>
+          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="demo-barbier" data-path="~/projects/demo-barbier">Détails</button><a class="abtn" href="https://barkatzineddine.github.io/demo-barbier/" target="_blank" rel="noopener">Tester ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-barbier" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web">
+        <button class="thumb" type="button" data-open="demo-boutique" data-path="~/projects/demo-boutique" aria-label="Voir les détails : Kaolin et Cendre, boutique de céramiques">
+          <img src="img/demo-boutique.webp" alt="Accueil de la boutique Kaolin et Cendre : titre, boutons et étagère de céramiques illustrées" loading="lazy"><span class="kind web">Web · démo en ligne</span>
+        </button>
+        <div class="pbody">
+          <h3>Kaolin &amp; Cendre, boutique de céramiques</h3>
+          <p>Boutique en ligne : catalogue filtrable, panier, commande avec paiement en mode test et administration. Démo en ligne.</p>
+          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">SVG</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="demo-boutique" data-path="~/projects/demo-boutique">Détails</button><a class="abtn" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener">Tester ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-boutique" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="web">
+        <button class="thumb" type="button" data-open="demo-facturation" data-path="~/projects/demo-facturation" aria-label="Voir les détails : Morel Agencement, devis, factures et portail client">
+          <img src="img/demo-facturation.webp" alt="Tableau de bord de Morel Agencement : chiffre d'affaires encaissé, graphique mensuel et meilleurs clients" loading="lazy"><span class="kind web">Web · démo en ligne</span>
+        </button>
+        <div class="pbody">
+          <h3>Morel Agencement, devis, factures et portail client</h3>
+          <p>Outil de gestion pour artisan : devis, factures, PDF générés dans le navigateur, portail client et graphiques. Démo en ligne.</p>
+          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">PDF</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="demo-facturation" data-path="~/projects/demo-facturation">Détails</button><a class="abtn" href="https://barkatzineddine.github.io/demo-facturation/" target="_blank" rel="noopener">Tester ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-facturation" target="_blank" rel="noopener">GitHub ↗</a></div>
         </div>
       </article>
 
@@ -945,6 +989,57 @@
   <h4>Usage</h4>
   <p>Destiné aux entraînements sur plateformes légales (TryHackMe, Hack The Box) et aux engagements autorisés. Le périmètre reflète l'accord écrit ; l'outil n'exploite rien et ne modifie rien : il identifie les services et remonte les défauts d'hygiène, à corriger ensuite après validation.</p>
   <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/reconscope" target="_blank" rel="noopener">Code source sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/reconscope/actions/workflows/ci.yml" target="_blank" rel="noopener">Voir la CI ↗</a></div>
+</template>
+
+<template id="t-demo-barbier">
+  <h3>Maison Corbin, site de barbier avec réservation</h3>
+  <p>Site d'un barbier lyonnais (fictif) : prestations et tarifs, galerie, équipe, horaires avec statut « ouvert maintenant », plan et formulaire de contact. La réservation se fait en quatre étapes (prestation, barbier, jour et créneau, coordonnées) et donne un code et un fichier agenda. Les créneaux tiennent compte des horaires, des pauses de chaque barbier, des jours fériés calculés, des fermetures exceptionnelles et des rendez-vous déjà pris. L'espace gérant affiche l'agenda par barbier, les indicateurs de la semaine, les messages et l'export CSV.</p>
+  <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
+  <div class="run"><b>En ligne sur GitHub Pages</b> : parcours complet testé dans Chrome sur l'URL publique (réservation, annulation, espace gérant, contact), sans erreur dans la console. Code gérant de la démo : <b>2468</b>.</div>
+  <img src="img/demo-barbier-agenda.webp" alt="Espace gérant : indicateurs, graphique des 14 prochains jours et agenda par barbier" loading="lazy">
+  <ul class="facts">
+    <li><b>Sécurité</b> : CSP stricte et Trusted Types (aucun <code>innerHTML</code>), aucun script tiers ni traceur, anti-spam sans captcha (champ piège, délai minimal, limite d'envois), données vérifiées au chargement.</li>
+    <li><b>Qualité</b> : JavaScript sans framework ni dépendance, accessible au clavier, données structurées schema.org pour le référencement local, 98 à 100 aux quatre scores Lighthouse sur mobile.</li>
+  </ul>
+  <div class="shots2">
+    <figure><img src="img/demo-barbier.webp" alt="Accueil du site Maison Corbin : photo d'un barbier au travail et bouton Réserver un créneau" loading="lazy"><figcaption>Accueil</figcaption></figure>
+    <figure><img src="img/demo-barbier-mobile.webp" alt="Choix du jour et du créneau sur téléphone" loading="lazy"><figcaption>Sur téléphone</figcaption></figure>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://barkatzineddine.github.io/demo-barbier/" target="_blank" rel="noopener">Tester la démo en ligne ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/demo-barbier" target="_blank" rel="noopener">Code source sur GitHub ↗</a></div>
+</template>
+
+<template id="t-demo-boutique">
+  <h3>Kaolin &amp; Cendre, boutique de céramiques</h3>
+  <p>Boutique d'un atelier de céramique nantais (fictif) : catalogue avec recherche et filtres partageables par lien, fiches produits où le choix de l'émail redessine la pièce, panier, commande en trois étapes (coordonnées, livraison, paiement en mode test) et suivi des commandes. L'administration gère les produits avec aperçu en direct, les stocks, les photos et le traitement des commandes jusqu'au remboursement.</p>
+  <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">SVG</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
+  <div class="run"><b>En ligne sur GitHub Pages</b> : parcours d'achat complet, refus de paiement, administration et import de photo testés dans Chrome sur l'URL publique. Code administrateur de la démo : <b>1357</b>. Code promo : <b>BIENVENUE10</b>.</div>
+  <img src="img/demo-boutique-produit.webp" alt="Fiche produit : vase Dune en terracotta avec choix de l'émail et de la quantité" loading="lazy">
+  <ul class="facts">
+    <li><b>Paiement</b> : aucun numéro de carte n'est demandé ; refus bancaire simulable. En production, paiement délégué à un prestataire certifié PCI-DSS.</li>
+    <li><b>Sécurité</b> : CSP stricte et Trusted Types, stocks et totaux recalculés à chaque étape, photos importées ré-encodées dans le navigateur (métadonnées GPS supprimées), export CSV protégé contre l'injection de formules.</li>
+  </ul>
+  <div class="shots2">
+    <figure><img src="img/demo-boutique.webp" alt="Accueil de la boutique Kaolin et Cendre : titre, boutons et étagère de céramiques illustrées" loading="lazy"><figcaption>Accueil</figcaption></figure>
+    <figure><img src="img/demo-boutique-mobile.webp" alt="Étape de paiement en mode test sur téléphone" loading="lazy"><figcaption>Sur téléphone</figcaption></figure>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener">Tester la démo en ligne ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/demo-boutique" target="_blank" rel="noopener">Code source sur GitHub ↗</a></div>
+</template>
+
+<template id="t-demo-facturation">
+  <h3>Morel Agencement, devis, factures et portail client</h3>
+  <p>Application de gestion pour une menuiserie (fictive) : clients, devis convertis en factures, suivi des paiements, relances et tableau de bord du chiffre d'affaires. Le client dispose d'un portail où il accepte ses devis avec une signature horodatée, télécharge ses PDF et règle ses factures (paiement simulé). Thèmes clair et sombre.</p>
+  <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">PDF</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
+  <div class="run"><b>En ligne sur GitHub Pages</b> : devis, signature dans le portail, facture, PDF, paiement, relance et export CSV testés dans Chrome sur l'URL publique.</div>
+  <img src="img/demo-facturation-portail.webp" alt="Portail client : devis à signer avec nom et case « Bon pour accord »" loading="lazy">
+  <ul class="facts">
+    <li><b>PDF sans bibliothèque</b> : générateur PDF écrit pour le projet (polices Helvetica, accents et symbole €, tableaux sur plusieurs pages), avec les mentions obligatoires d'une facture française.</li>
+    <li><b>Règles et sécurité</b> : numérotation chronologique sans trou, facture émise non modifiable, empreinte SHA-256 de chaque devis accepté, liens de portail non devinables, CSP stricte et Trusted Types.</li>
+  </ul>
+  <div class="shots2">
+    <figure><img src="img/demo-facturation.webp" alt="Tableau de bord de Morel Agencement : chiffre d'affaires encaissé, graphique mensuel et meilleurs clients" loading="lazy"><figcaption>Tableau de bord</figcaption></figure>
+    <figure><img src="img/demo-facturation-mobile.webp" alt="Édition d'un devis sur téléphone, thème sombre" loading="lazy"><figcaption>Sur téléphone</figcaption></figure>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://barkatzineddine.github.io/demo-facturation/" target="_blank" rel="noopener">Tester la démo en ligne ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/demo-facturation" target="_blank" rel="noopener">Code source sur GitHub ↗</a></div>
 </template>
 
 <template id="t-phishing">
