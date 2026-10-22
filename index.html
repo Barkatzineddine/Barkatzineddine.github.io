@@ -185,6 +185,9 @@
   .kind.sec{color:var(--red);} .kind.web{color:var(--accent);} .kind.soft{color:var(--blue);}
   .morebar{display:flex;justify-content:center;margin-top:22px;}
   .morebar .chip{padding:9px 18px;font-size:12px;}
+  .pgrid.demos{grid-template-columns:repeat(3,minmax(0,1fr));}
+  @media (max-width:1000px){.pgrid.demos{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media (max-width:760px){.pgrid.demos{grid-template-columns:1fr;}}
   .pcard.featured{grid-column:1 / -1;flex-direction:row;border-color:var(--accent-dim);}
   .pcard.featured .thumb{flex:0 0 56%;aspect-ratio:auto;min-height:320px;border-bottom:none;border-right:1px solid var(--line);}
   .pcard.featured .thumb img{position:absolute;inset:0;object-position:left top;}
@@ -307,6 +310,7 @@
     <span class="brand"><b>mzbarkat</b>@portfolio:~$</span>
     <div class="links">
       <a href="#parcours" data-spy="parcours" style="--sec-c:var(--amber)"><span class="pfx">./</span>parcours</a>
+      <a href="#demos" data-spy="demos" style="--sec-c:var(--blue)"><span class="pfx">./</span>démos</a>
       <a href="#projets" data-spy="projets" style="--sec-c:var(--accent)"><span class="pfx">./</span>projets</a>
       <a href="#competences" data-spy="competences" style="--sec-c:var(--blue)"><span class="pfx">./</span>compétences</a>
       <a href="#contact" data-spy="contact" style="--sec-c:var(--accent)"><span class="pfx">./</span>contact</a>
@@ -322,6 +326,7 @@
       <p class="brief">À la recherche d'une alternance en cybersécurité de 24 mois (rythme 1 semaine entreprise / 1 semaine université) pour le Master Conception de Systèmes et Cybersécurité de l'Université Paris&#8209;Est Créteil.</p>
       <div class="cta">
         <a class="btn-primary" href="#projets">Voir mes projets</a>
+        <a class="btn-ghost" href="#demos">Démos web</a>
         <a class="btn-ghost" href="#parcours">Mon parcours</a>
         <a class="btn-ghost" href="#contact">Me contacter</a>
       </div>
@@ -436,10 +441,57 @@
     </div>
   </section>
 
+  <!-- ===================== DÉMOS WEB ===================== -->
+  <section class="zone" id="demos">
+    <div class="zone-head">
+      <div class="zone-title"><span class="n">02 /</span><h2>Démos web</h2></div>
+      <p class="zone-sub">Trois sites en ligne à tester sur votre téléphone. Rapides, accessibles et sécurisés par défaut : aucun script tiers, aucun traceur, saisies contrôlées. Entreprises et données fictives.</p>
+    </div>
+
+    <div class="pgrid demos" style="margin-top:18px">
+      <article class="pcard">
+        <a class="thumb" href="https://barkatzineddine.github.io/demo-barbier/" target="_blank" rel="noopener" aria-label="Tester la démo : Maison Corbin, site de barbier avec réservation (nouvel onglet)">
+          <img src="img/demo-barbier.webp" alt="Accueil du site Maison Corbin : photo d'un barbier au travail et bouton Réserver un créneau" loading="lazy" width="960" height="600"><span class="kind web">Démo en ligne · Réservation</span>
+        </a>
+        <div class="pbody">
+          <h3>Maison Corbin, site de barbier avec réservation</h3>
+          <p>Le site d'un barbier lyonnais : prestations, galerie, horaires et contact, avec une prise de rendez-vous en quatre étapes qui tient compte des horaires, des pauses, des jours fériés et des créneaux déjà pris. Le gérant gère son agenda par barbier, ses messages et ses fermetures.</p>
+          <ul class="proof"><li><b>4</b> étapes pour réserver, fichier agenda inclus</li><li><b>98–100</b> aux 4 scores Lighthouse</li><li><b>0</b> script tiers, cookie ou traceur</li><li><b>3</b> protections anti-spam sans captcha</li></ul>
+          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
+          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-barbier/" target="_blank" rel="noopener">Tester la démo ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-barbier" target="_blank" rel="noopener">Code ↗</a></div>
+        </div>
+      </article>
+      <article class="pcard">
+        <a class="thumb" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener" aria-label="Tester la démo : Kaolin et Cendre, boutique de céramiques (nouvel onglet)">
+          <img src="img/demo-boutique.webp" alt="Accueil de la boutique Kaolin et Cendre : titre, boutons et étagère de céramiques illustrées" loading="lazy" width="960" height="600"><span class="kind web">Démo en ligne · E-commerce</span>
+        </a>
+        <div class="pbody">
+          <h3>Kaolin &amp; Cendre, boutique de céramiques</h3>
+          <p>Une boutique complète : catalogue filtrable, fiches produits avec choix de l'émail, panier, commande en trois étapes et paiement en mode test, sans aucune donnée bancaire demandée. L'administration gère produits, stocks, photos et suivi des commandes.</p>
+          <ul class="proof"><li><b>13</b> produits, 8 émaux, filtres partageables</li><li><b>3</b> étapes de commande, paiement simulé</li><li><b>98–100</b> aux 4 scores Lighthouse</li><li><b>0</b> numéro de carte demandé ou stocké</li></ul>
+          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
+          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener">Tester la démo ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-boutique" target="_blank" rel="noopener">Code ↗</a></div>
+        </div>
+      </article>
+      <article class="pcard">
+        <a class="thumb" href="https://barkatzineddine.github.io/demo-facturation/" target="_blank" rel="noopener" aria-label="Tester la démo : Morel Agencement, devis, factures et portail client (nouvel onglet)">
+          <img src="img/demo-facturation.webp" alt="Tableau de bord de Morel Agencement : chiffre d'affaires encaissé, graphique mensuel et meilleurs clients" loading="lazy" width="960" height="600"><span class="kind web">Démo en ligne · Gestion</span>
+        </a>
+        <div class="pbody">
+          <h3>Morel Agencement, devis, factures et portail client</h3>
+          <p>Un outil de gestion pour artisan : clients, devis convertis en factures, export PDF généré dans le navigateur, relances, suivi des paiements et graphiques du chiffre d'affaires. Le client accepte ses devis en ligne depuis son portail, avec une signature horodatée.</p>
+          <ul class="proof"><li><b>PDF</b> générés sans bibliothèque, mentions légales</li><li><b>SHA-256</b> empreinte de chaque devis signé</li><li><b>98–100</b> aux 4 scores Lighthouse</li><li><b>2</b> thèmes, clair et sombre</li></ul>
+          <div class="tagset"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span><span class="tag">GitHub Pages</span></div>
+          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-facturation/" target="_blank" rel="noopener">Tester la démo ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/demo-facturation" target="_blank" rel="noopener">Code ↗</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <!-- ===================== PROJETS ===================== -->
   <section class="zone" id="projets">
     <div class="zone-head">
-      <div class="zone-title"><span class="n">02 /</span><h2>Projets</h2></div>
+      <div class="zone-title"><span class="n">03 /</span><h2>Projets</h2></div>
       <p class="zone-sub">Ce que j'ai construit et lancé en local. Ouvre une carte pour voir les captures et les détails.</p>
     </div>
 
@@ -685,7 +737,7 @@
   <!-- ===================== COMPETENCES ===================== -->
   <section class="zone" id="competences">
     <div class="zone-head">
-      <div class="zone-title"><span class="n">03 /</span><h2>Compétences</h2></div>
+      <div class="zone-title"><span class="n">04 /</span><h2>Compétences</h2></div>
       <p class="zone-sub">Les outils et technologies que j'utilise, par domaine.</p>
     </div>
     <div class="sk-grid">
@@ -715,7 +767,7 @@
   <!-- ===================== CONTACT ===================== -->
   <section class="zone" id="contact">
     <div class="zone-head">
-      <div class="zone-title"><span class="n">04 /</span><h2>Contact</h2></div>
+      <div class="zone-title"><span class="n">05 /</span><h2>Contact</h2></div>
       <p class="zone-sub">Je cherche une alternance de 24 mois en cybersécurité (1 semaine entreprise / 1 semaine université).</p>
     </div>
     <div class="term">
