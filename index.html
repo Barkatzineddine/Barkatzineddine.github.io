@@ -62,7 +62,8 @@
   }
   .nav .brand{color:var(--ink-dim);white-space:nowrap;}
   .nav .brand b{color:var(--accent);font-weight:600;}
-  .nav .links{display:flex;gap:4px;overflow-x:auto;min-width:0;}
+  .nav .links{display:flex;gap:4px;overflow-x:auto;min-width:0;scrollbar-width:none;}
+  .nav .links::-webkit-scrollbar{display:none;}
   .nav .links a{color:var(--ink-dim);text-decoration:none;padding:5px 10px;border:1px solid transparent;white-space:nowrap;}
   .nav .links a:hover{color:var(--ink);}
   .nav .links a.on{color:var(--sec-c, var(--accent));border-color:var(--line);background:var(--panel);}
@@ -91,6 +92,7 @@
   .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
   .status-chip{margin-top:18px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel-2);padding:7px 12px;font-size:11.5px;}
   .status-chip b{color:var(--accent);font-weight:600;}
+  .status-chip .led{flex:none;}
 
   .hero-3d{position:relative;aspect-ratio:1/1;width:100%;max-width:100%;max-height:480px;border:1px solid var(--line);background:radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 9%, var(--panel)) 0%, var(--panel-2) 70%);overflow:hidden;}
   @media (max-width:880px){.hero-3d{aspect-ratio:4/3;max-height:340px;}}
@@ -105,6 +107,7 @@
 
   .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px;}
   @media (max-width:640px){.stats{grid-template-columns:1fr;}}
+  @media (min-width:641px) and (max-width:1000px){.stat{flex-direction:column;align-items:flex-start;gap:2px;}}
   .stat{border:1px solid var(--line);background:var(--panel);padding:12px 16px;display:flex;align-items:baseline;gap:12px;min-width:0;}
   .stat .big{font-size:24px;font-weight:800;color:var(--accent);flex:none;}
   .stat .txt{font-size:11.5px;color:var(--ink-dim);}
@@ -260,6 +263,37 @@
   .wide{overflow-x:auto;border:1px solid var(--line);background:#1c1b2b;}
   .wide img{min-width:900px;width:100%;border:none;}
 
+  /* ---- phones and touch screens ---- */
+  html:has(dialog[open]){overflow:hidden;}
+  @media (max-width:560px){
+    .nav{padding:6px;}
+    .nav .links{flex:1;justify-content:space-between;gap:2px;}
+    .nav .links a{padding:7px 8px;font-size:11.5px;}
+    .nav .pfx{display:none;}
+    .hero{padding-block:24px 4px;gap:22px;}
+    .cta{display:grid;grid-template-columns:1fr 1fr;}
+    .cta .btn-primary{grid-column:1 / -1;}
+    .cta a{text-align:center;padding:11px 10px;}
+    .hero-3d{aspect-ratio:16/10;max-height:240px;}
+    .stats{gap:8px;margin-top:20px;}
+    .stat{padding:10px 14px;}
+    .zone{margin-top:48px;scroll-margin-top:60px;}
+    .zone-head{margin-bottom:18px;}
+    .pgrid{gap:16px;}
+    .pcard:not(.featured) .thumb{aspect-ratio:2/1;}
+    .pbody > p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden;}
+    .pcard.featured .pbody > p{-webkit-line-clamp:6;}
+    .term-body{padding:14px;}
+    dialog{width:100vw;height:100dvh;max-height:none;margin:0;border:none;}
+    .dlg-body{padding:16px 16px 28px;}
+  }
+  @media (max-width:360px){.nav .links a{padding:7px 5px;font-size:11px;}}
+  @media (pointer:coarse){
+    .chip,.abtn,.btn-primary,.btn-ghost,.dlg-close{min-height:40px;display:inline-flex;align-items:center;justify-content:center;}
+    .btn{min-height:32px;padding:4px 12px;}
+    .nav .links a{min-height:36px;display:inline-flex;align-items:center;}
+  }
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     .pcard,.thumb img{transition:none;transform:none;}
@@ -272,10 +306,10 @@
   <nav class="nav" aria-label="Sections">
     <span class="brand"><b>mzbarkat</b>@portfolio:~$</span>
     <div class="links">
-      <a href="#parcours" data-spy="parcours" style="--sec-c:var(--amber)">./parcours</a>
-      <a href="#projets" data-spy="projets" style="--sec-c:var(--accent)">./projets</a>
-      <a href="#competences" data-spy="competences" style="--sec-c:var(--blue)">./compétences</a>
-      <a href="#contact" data-spy="contact" style="--sec-c:var(--accent)">./contact</a>
+      <a href="#parcours" data-spy="parcours" style="--sec-c:var(--amber)"><span class="pfx">./</span>parcours</a>
+      <a href="#projets" data-spy="projets" style="--sec-c:var(--accent)"><span class="pfx">./</span>projets</a>
+      <a href="#competences" data-spy="competences" style="--sec-c:var(--blue)"><span class="pfx">./</span>compétences</a>
+      <a href="#contact" data-spy="contact" style="--sec-c:var(--accent)"><span class="pfx">./</span>contact</a>
     </div>
     <span class="status"><span class="led live"></span> access granted</span>
   </nav>
@@ -291,7 +325,7 @@
         <a class="btn-ghost" href="#parcours">Mon parcours</a>
         <a class="btn-ghost" href="#contact">Me contacter</a>
       </div>
-      <div class="status-chip"><span class="led live"></span> statut : <b>alternance en cours</b> chez Eurocom Broadcast, Paris</div>
+      <div class="status-chip"><span class="led live"></span><span>statut : <b>alternance en cours</b> chez Eurocom Broadcast, Paris</span></div>
     </div>
     <div class="hero-3d" id="globe" aria-hidden="true">
       <div class="hud tl">NET.TOPOLOGY // <b id="hud-n">120</b> nœuds</div>
@@ -406,7 +440,7 @@
   <section class="zone" id="projets">
     <div class="zone-head">
       <div class="zone-title"><span class="n">02 /</span><h2>Projets</h2></div>
-      <p class="zone-sub">Ce que j'ai construit et lancé en local. Clique sur une carte pour voir les captures et les détails.</p>
+      <p class="zone-sub">Ce que j'ai construit et lancé en local. Ouvre une carte pour voir les captures et les détails.</p>
     </div>
 
     <div class="filters" role="group" aria-label="Filtrer les projets">
@@ -652,9 +686,9 @@
       <div class="term-bar"><div class="dots"><span></span><span></span><span></span></div>contact.sh</div>
       <div class="term-body">
         <div class="ct-grid">
-          <div class="field"><span class="k">email</span><div class="v-row"><span class="v" id="val-email">mbarkat0312@gmail.com</span><button class="btn" type="button" data-copy="mbarkat0312@gmail.com" data-target="val-email">copy</button></div></div>
+          <div class="field"><span class="k">email</span><div class="v-row"><a class="ext v" id="val-email" href="mailto:mbarkat0312@gmail.com">mbarkat0312@gmail.com</a><button class="btn" type="button" data-copy="mbarkat0312@gmail.com" data-target="val-email">copy</button></div></div>
           <div class="field"><span class="k">github</span><div class="v-row"><a class="ext v" href="https://github.com/Barkatzineddine" target="_blank" rel="noopener">github.com/Barkatzineddine</a></div></div>
-          <div class="field"><span class="k">linkedin</span><div class="v-row"><a class="ext v" href="https://www.linkedin.com/in/mohamed-zineddine-barkat/" target="_blank" rel="noopener">linkedin.com/in/mohamed&#8209;zineddine&#8209;barkat</a></div></div>
+          <div class="field"><span class="k">linkedin</span><div class="v-row"><a class="ext v" href="https://www.linkedin.com/in/mohamed-zineddine-barkat/" target="_blank" rel="noopener">linkedin.com/in/<wbr>mohamed&#8209;zineddine&#8209;barkat</a></div></div>
         </div>
       </div>
     </div>
@@ -876,10 +910,18 @@
       entries.forEach(function(en){
         if (en.isIntersecting) {
           Object.keys(links).forEach(function(k){ links[k].classList.toggle('on', k === en.target.id); });
+          // keep the active link visible when the bar scrolls sideways on narrow screens
+          var a = links[en.target.id], bar = a && a.parentElement;
+          if (bar && bar.scrollWidth > bar.clientWidth) bar.scrollLeft = a.offsetLeft - (bar.clientWidth - a.offsetWidth) / 2;
         }
       });
     }, {rootMargin:'-35% 0px -60% 0px'});
     Object.keys(links).forEach(function(k){ var s = document.getElementById(k); if (s) spy.observe(s); });
+    // back at the top of the page, no section is active
+    var hero = document.querySelector('.hero');
+    if (hero) new IntersectionObserver(function(entries){
+      if (entries[0].isIntersecting) Object.keys(links).forEach(function(k){ links[k].classList.remove('on'); });
+    }, {rootMargin:'-35% 0px -60% 0px'}).observe(hero);
   }
 
   /* ---------- project filters ---------- */
