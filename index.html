@@ -182,6 +182,22 @@
   .kind.sec{color:var(--red);} .kind.web{color:var(--accent);} .kind.soft{color:var(--blue);}
   .morebar{display:flex;justify-content:center;margin-top:22px;}
   .morebar .chip{padding:9px 18px;font-size:12px;}
+  .pcard.featured{grid-column:1 / -1;flex-direction:row;border-color:var(--accent-dim);}
+  .pcard.featured .thumb{flex:0 0 56%;aspect-ratio:auto;min-height:320px;border-bottom:none;border-right:1px solid var(--line);}
+  .pcard.featured .thumb img{object-position:left top;}
+  .pcard.featured .pbody h3{font-size:18px;}
+  .pcard.featured .kind{color:var(--accent);background:color-mix(in srgb, var(--accent) 14%, var(--bg));}
+  .proof{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;}
+  .proof li{font-size:11.8px;color:var(--ink-dim);border-left:2px solid var(--accent-dim);padding-left:8px;}
+  .proof b{color:var(--accent);font-size:14px;}
+  @media (max-width:900px){
+    .pcard.featured{flex-direction:column;}
+    .pcard.featured .thumb{flex:none;aspect-ratio:16/9;min-height:0;border-right:none;border-bottom:1px solid var(--line);}
+  }
+  @media (max-width:480px){.proof{grid-template-columns:1fr;}}
+  .dlg-body h4{font-size:13.5px;color:var(--accent);margin:8px 0 0;}
+  .dlg-body ul.facts{margin:0;padding-left:18px;font-size:12.8px;color:var(--ink-dim);display:flex;flex-direction:column;gap:6px;}
+  .dlg-body ul.facts b{color:var(--ink);}
   .pbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0;}
   .pbody h3{font-size:15px;font-weight:700;color:var(--ink);}
   .pbody p{margin:0;font-size:12.6px;color:var(--ink-dim);}
@@ -400,6 +416,24 @@
     </div>
 
     <div class="pgrid" style="margin-top:18px">
+      <article class="pcard featured" data-cat="sec">
+        <button class="thumb" type="button" data-open="shieldpipe" data-path="~/projects/shieldpipe" aria-label="Voir les détails : ShieldPipe, pipeline DevSecOps">
+          <img src="img/shieldpipe-pipeline.png" alt="Pipeline GitHub Actions de ShieldPipe : les 9 jobs réussis en 5 minutes 48" loading="lazy"><span class="kind sec">Projet phare · DevSecOps</span>
+        </button>
+        <div class="pbody">
+          <h3>ShieldPipe, pipeline DevSecOps de bout en bout</h3>
+          <p>Une API de gestion d'incidents pour SOC qui n'arrive en production qu'après avoir passé tous les contrôles : secrets, SAST, dépendances, politiques OPA, scan d'image, SBOM et DAST authentifié avec OWASP ZAP. Elle est ensuite déployée sur un vrai cluster Kubernetes + Cilium, où chaque protection réseau et conteneur est attaquée et vérifiée. L'image publiée est signée sans clé (Sigstore) avec une provenance SLSA.</p>
+          <ul class="proof">
+            <li><b>9</b> contrôles bloquants avant fusion</li>
+            <li><b>11</b> protections vérifiées sur un cluster réel</li>
+            <li><b>44</b> tests, dont 37 tests de sécurité</li>
+            <li><b>22</b> règles de politique en Rego</li>
+          </ul>
+          <div class="tagset"><span class="tag">GitHub Actions</span><span class="tag">Semgrep</span><span class="tag">CodeQL</span><span class="tag">Trivy</span><span class="tag">OWASP ZAP</span><span class="tag">OPA / Rego</span><span class="tag">Kubernetes</span><span class="tag">Cilium</span><span class="tag">Sigstore</span><span class="tag">FastAPI</span></div>
+          <div class="actions"><button class="abtn main" type="button" data-open="shieldpipe" data-path="~/projects/shieldpipe">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/shieldpipe" target="_blank" rel="noopener">GitHub ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/shieldpipe/pull/1" target="_blank" rel="noopener">PR bloquée ↗</a></div>
+        </div>
+      </article>
+
       <article class="pcard" data-cat="sec">
         <button class="thumb" type="button" data-open="phishing" data-path="~/projects/phishing-agent" aria-label="Voir les détails : agent de triage de phishing">
           <img src="img/phishing-agent.png" alt="Sortie du script d'extraction d'un email de phishing" loading="lazy"><span class="kind sec">Sécurité</span>
@@ -617,6 +651,36 @@
   <div class="dlg-bar"><div class="dots"><span></span><span></span><span></span></div><span class="dlg-title" id="dlg-title"></span><button class="dlg-close" type="button">fermer ✕</button></div>
   <div class="dlg-body"></div>
 </dialog>
+
+<template id="t-shieldpipe">
+  <h3>ShieldPipe, pipeline DevSecOps de bout en bout</h3>
+  <p>Une API de gestion d'incidents pour une équipe SOC (FastAPI : Argon2id, JWT durci, contrôle d'accès par rôle, limitation des tentatives de connexion, journal d'audit JSON pour SIEM). Le vrai sujet est la chaîne de livraison autour : le code n'arrive en production qu'après 9 contrôles bloquants, puis le déploiement est testé sur un cluster Kubernetes réel.</p>
+  <div class="tagset"><span class="tag">Gitleaks</span><span class="tag">Semgrep (5 règles maison)</span><span class="tag">CodeQL</span><span class="tag">Bandit</span><span class="tag">pip-audit</span><span class="tag">Trivy</span><span class="tag">hadolint</span><span class="tag">OPA / Conftest</span><span class="tag">OWASP ZAP</span><span class="tag">kind + Cilium + Hubble</span><span class="tag">cosign</span><span class="tag">SLSA</span></div>
+  <div class="run"><b>Tout est public et vérifiable</b> : pipeline vert sur GitHub Actions en environ 6 minutes, résultats des 7 outils dans l'onglet Security du dépôt, image signée sur GHCR.</div>
+  <img src="img/shieldpipe-pipeline.png" alt="Pipeline GitHub Actions : secrets, tests, SAST, dépendances, IaC, build, DAST, Kubernetes et publication signée, tous réussis">
+
+  <h4>Une modification dangereuse est bloquée</h4>
+  <p>La pull request de démonstration fait tourner le conteneur en root privilégié, l'expose en NodePort et déploie l'image « latest ». Trois contrôles indépendants la bloquent, et GitHub affiche les alertes directement sur les lignes fautives.</p>
+  <img src="img/shieldpipe-pr-annotation.png" alt="Alerte Semgrep affichée par GitHub sur la ligne allowPrivilegeEscalation: true de la pull request">
+  <img src="img/shieldpipe-pr-result.png" alt="Résumé : 7 violations OPA, 2 alertes Semgrep, 2 alertes Trivy HIGH ; image jamais construite ni déployée">
+
+  <h4>Protections vérifiées sur le cluster à chaque build</h4>
+  <ul class="facts">
+    <li><b>Politique Cilium L7</b> : les routes non déclarées sont refusées par Envoy (403) avant d'atteindre l'application.</li>
+    <li><b>Politique L3/L4</b> : un pod sans le bon label ne peut même pas ouvrir de connexion.</li>
+    <li><b>Aucune sortie réseau</b> depuis le pod de l'API (pas d'exfiltration ni de reverse shell).</li>
+    <li><b>Conteneur durci</b> : UID 10001, système de fichiers en lecture seule, aucun jeton Kubernetes monté.</li>
+    <li><b>Pod Security Admission</b> : le serveur d'API refuse un pod privilégié.</li>
+  </ul>
+
+  <h4>Ce que le pipeline a vraiment trouvé pendant sa construction</h4>
+  <ul class="facts">
+    <li><b>Dependabot sans délai de carence</b>, signalé par Semgrep : corrigé avec 7 jours d'attente avant d'adopter une nouvelle version.</li>
+    <li><b>Une politique L7 refusée en silence par Envoy</b> : diagnostiquée avec Hubble et les journaux Envoy (expression régulière trop complexe pour RE2). Envoy avait échoué en mode fermé.</li>
+    <li><b>Une alerte ZAP analysée</b> et documentée comme risque accepté avec ses contrôles compensatoires.</li>
+  </ul>
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://github.com/Barkatzineddine/shieldpipe" target="_blank" rel="noopener">Code source sur GitHub ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/shieldpipe/pull/1" target="_blank" rel="noopener">Voir la PR bloquée ↗</a><a class="abtn" href="https://github.com/Barkatzineddine/shieldpipe/blob/main/docs/threat-model.md" target="_blank" rel="noopener">Modèle de menaces ↗</a></div>
+</template>
 
 <template id="t-phishing">
   <h3>Agent IA de triage de phishing</h3>
