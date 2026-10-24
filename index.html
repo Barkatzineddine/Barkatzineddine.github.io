@@ -434,15 +434,15 @@
         </div>
       </article>
       <article class="pcard">
-        <a class="thumb" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener" aria-label="Tester la démo : Kaolin et Cendre, boutique de céramiques (nouvel onglet)">
-          <img src="img/demo-boutique.webp" alt="Accueil de la boutique Kaolin et Cendre : titre, boutons et étagère de céramiques illustrées" loading="lazy" width="960" height="600"><span class="kind web">Démo en ligne · E-commerce</span>
+        <a class="thumb" href="https://barkatzineddine.github.io/demo-configurateur/" target="_blank" rel="noopener" aria-label="Tester la démo : Atelier Lisière, configurateur 3D de bibliothèque sur mesure (nouvel onglet)">
+          <img src="img/demo-configurateur.webp" alt="Configurateur Atelier Lisière : bibliothèque en chêne en 3D, curseurs de dimensions et nuancier de matières" loading="lazy" width="960" height="600"><span class="kind web">Démo en ligne · 3D</span>
         </a>
         <div class="pbody">
-          <h3>Kaolin &amp; Cendre, boutique de céramiques</h3>
-          <p>Une boutique complète : catalogue filtrable, émail au choix qui redessine la pièce, panier, commande en trois étapes avec paiement en mode test. L'administration a un tableau des commandes en glisser-déposer, un tableau de bord et un éditeur de produits ; chaque commande arrive en direct dans l'onglet de l'atelier.</p>
-          <ul class="proof"><li><b>89</b> tests unitaires, 31 scénarios navigateur</li><li><b>100</b> aux 4 scores Lighthouse, mesurés en ligne</li><li><b>0</b> survente : stock et total revérifiés au paiement</li><li><b>0</b> numéro de carte demandé ou stocké</li></ul>
-          <div class="tagset"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">dnd-kit</span><span class="tag">Vitest</span><span class="tag">Playwright</span><span class="tag">GitHub Actions</span><span class="tag">CSP stricte</span></div>
-          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener">Tester la démo ↗</a><button class="abtn" type="button" data-open="demo-boutique" data-path="~/projects/demo-boutique">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/demo-boutique" target="_blank" rel="noopener">Code ↗</a></div>
+          <h3>Atelier Lisière, configurateur 3D sur mesure</h3>
+          <p>Le client règle les dimensions, la matière et les options d'une bibliothèque et la voit en 3D, avec le prix en direct. Derrière l'image, de la vraie menuiserie : règles de fabrication expliquées, fiche de débit et plan de découpe optimisé sur panneaux standard, demande de devis avec récapitulatif PDF.</p>
+          <ul class="proof"><li><b>3D</b> générée depuis les cotes, sans fichier modèle</li><li><b>Plan</b> de découpe optimisé, fil du bois respecté</li><li><b>70</b> tests unitaires, 24 scénarios navigateur</li><li><b>99–100</b> aux 4 scores Lighthouse</li></ul>
+          <div class="tagset"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Three.js</span><span class="tag">React Three Fiber</span><span class="tag">Vitest</span><span class="tag">Playwright</span><span class="tag">GitHub Actions</span><span class="tag">CSP stricte</span></div>
+          <div class="actions"><a class="abtn main" href="https://barkatzineddine.github.io/demo-configurateur/" target="_blank" rel="noopener">Tester la démo ↗</a><button class="abtn" type="button" data-open="demo-configurateur" data-path="~/projects/demo-configurateur">Détails</button><a class="abtn" href="https://github.com/Barkatzineddine/demo-configurateur" target="_blank" rel="noopener">Code ↗</a></div>
         </div>
       </article>
       <article class="pcard">
@@ -935,22 +935,22 @@
   <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://barkatzineddine.github.io/demo-barbier/" target="_blank" rel="noopener">Tester la démo en ligne ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/demo-barbier" target="_blank" rel="noopener">Code source sur GitHub ↗</a></div>
 </template>
 
-<template id="t-demo-boutique">
-  <h3>Kaolin &amp; Cendre, boutique de céramiques</h3>
-  <p>Boutique d'un atelier de céramique nantais (fictif) : recherche insensible aux accents et filtres partageables par lien, pièces dessinées en SVG selon leur forme et l'émail choisi, panier revérifié à chaque lecture contre le catalogue, commande en trois étapes avec paiement en mode test, suivi des commandes mis à jour en direct. L'administration a deux rôles : la gérante (tableau de bord, catalogue, remboursements, export) et le préparateur, qui ne voit que le tableau des commandes en glisser-déposer.</p>
-  <div class="tagset"><span class="tag">React 19</span><span class="tag">TypeScript strict</span><span class="tag">Vite</span><span class="tag">Zustand</span><span class="tag">Zod</span><span class="tag">dnd-kit</span><span class="tag">SVG</span><span class="tag">Vitest</span><span class="tag">Playwright</span><span class="tag">axe</span><span class="tag">Lighthouse CI</span><span class="tag">GitHub Actions</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span></div>
-  <div class="run"><b>En ligne sur GitHub Pages</b> : chaque push passe le lint, la vérification des types, 89 tests unitaires, 31 scénarios Playwright sur ordinateur et mobile (dont des scans d'accessibilité axe) et Lighthouse CI avant d'être déployé. Les comptes de démonstration (gérante, préparateur) sont indiqués sur la page d'administration. Code promo : <b>BIENVENUE10</b>.</div>
-  <img src="img/demo-boutique-board.webp" alt="Tableau des commandes : colonnes payée, en préparation, expédiée et livrée, avec des cartes déplaçables" loading="lazy">
+<template id="t-demo-configurateur">
+  <h3>Atelier Lisière, configurateur 3D de bibliothèque sur mesure</h3>
+  <p>Configurateur pour un atelier de menuiserie (fictif) à Annecy : largeur, hauteur, profondeur, colonnes, matière (chêne, noyer, frêne, contreplaqué, quatre laques), bas ouvert, portes ou tiroirs, poignées, socle, fond, éclairage LED et pose. La bibliothèque est générée en 3D à partir des cotes : on la tourne, on ouvre portes et tiroirs, on affiche les cotes, on exporte une image. Le prix suit en direct, calculé sur les panneaux réellement utilisés, la quincaillerie et la main-d'œuvre ; un lien partageable rouvre la même configuration, et la demande de devis produit un récapitulatif PDF avec la fiche de débit.</p>
+  <div class="tagset"><span class="tag">React 19</span><span class="tag">TypeScript strict</span><span class="tag">Vite</span><span class="tag">Three.js</span><span class="tag">React Three Fiber</span><span class="tag">Zustand</span><span class="tag">Zod</span><span class="tag">PDF</span><span class="tag">Vitest</span><span class="tag">Playwright</span><span class="tag">axe</span><span class="tag">Lighthouse CI</span><span class="tag">GitHub Actions</span><span class="tag">CSP stricte</span><span class="tag">Trusted Types</span></div>
+  <div class="run"><b>En ligne sur GitHub Pages</b> : chaque push passe le lint, la vérification des types, 70 tests unitaires, 24 scénarios Playwright sur ordinateur et mobile (3D rendue en logiciel, image PNG, PDF téléchargé, scans d'accessibilité axe) et Lighthouse CI avant d'être déployé.</div>
+  <img src="img/demo-configurateur-3d.webp" alt="Bibliothèque laquée vert sauge en 3D, tiroirs ouverts, poignées barre et cotes affichées" loading="lazy">
   <ul class="facts">
-    <li><b>Paiement</b> : aucun numéro de carte n'est demandé ; refus bancaire simulable. En production, paiement délégué à un prestataire certifié PCI-DSS.</li>
-    <li><b>Règles</b> : montants en centimes, stock et total revérifiés juste avant la commande (refus plutôt que survente), permissions vérifiées dans les fonctions d'état et pas seulement à l'écran.</li>
-    <li><b>Sécurité</b> : CSP stricte et Trusted Types, photos importées ré-encodées dans le navigateur (métadonnées GPS supprimées), export CSV protégé contre l'injection de formules.</li>
+    <li><b>Règles de menuiserie</b> : une tablette ne dépasse pas 80 cm (elle fléchirait), un dessus plus long qu'un panneau est fait en deux parties raccordées sur une séparation, fixation murale et risque de basculement signalés ; chaque ajustement est expliqué.</li>
+    <li><b>Plan de découpe</b> : placement en guillotine sur panneaux de 2800 × 2070 mm avec trait de scie et recoupe, fil du bois respecté pour le placage ; plusieurs heuristiques sont essayées, la moins gourmande en panneaux l'emporte.</li>
+    <li><b>Performance</b> : premier écran pré-rendu, three.js (250 Ko) chargé après coup sur ordinateur et à la demande sur téléphone, images calculées seulement quand quelque chose change.</li>
   </ul>
   <div class="shots2">
-    <figure><img src="img/demo-boutique.webp" alt="Accueil de la boutique Kaolin et Cendre : titre, boutons et étagère de céramiques illustrées" loading="lazy"><figcaption>Accueil</figcaption></figure>
-    <figure><img src="img/demo-boutique-mobile.webp" alt="Fiche produit sur téléphone" loading="lazy"><figcaption>Sur téléphone</figcaption></figure>
+    <figure><img src="img/demo-configurateur-plan.webp" alt="Plan de découpe : deux panneaux de chêne avec les pièces placées" loading="lazy"><figcaption>Fiche atelier</figcaption></figure>
+    <figure><img src="img/demo-configurateur-mobile.webp" alt="Le configurateur sur téléphone, vue de face et bouton Afficher en 3D" loading="lazy"><figcaption>Sur téléphone</figcaption></figure>
   </div>
-  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://barkatzineddine.github.io/demo-boutique/" target="_blank" rel="noopener">Tester la démo en ligne ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/demo-boutique" target="_blank" rel="noopener">Code source sur GitHub ↗</a></div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="abtn main" href="https://barkatzineddine.github.io/demo-configurateur/" target="_blank" rel="noopener">Tester la démo en ligne ↗</a><a class="abtn main" href="https://github.com/Barkatzineddine/demo-configurateur" target="_blank" rel="noopener">Code source sur GitHub ↗</a></div>
 </template>
 
 <template id="t-demo-facturation">
